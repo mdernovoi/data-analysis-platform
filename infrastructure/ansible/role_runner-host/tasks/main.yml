@@ -1,0 +1,40 @@
+---
+# tasks file for role_runner-host
+
+### Configure static dns entries (if no global dns is available)
+- name: Create static dns entries if required
+  vars: 
+    dns_template: |
+      {% for host in extra_hosts %}
+        {{ host.ip }}   {{ host.name }}
+      {% endfor %}
+      
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    block: "{{ dns_template }}"
+  when: use_static_dns
+
+### Generate configuration files 
+- name: Generate generic Gitlab runner config
+  ansible.builtin.template:
+    src: templates/gitlab-runner-generic.config.toml.j2
+    dest: "{{ paths.data }}/{{ host_prefix }}_gitlab-runner-generic-1/etc.gitlab-runner/config_templates/gitlab-runner-generic.config.toml"
+    owner: "{{ infrastructure_account.user }}"
+    group: "{{ infrastructure_account.group }}"
+    mode: '0755'
+
+- name: Generate Nginx configuration file
+  ansible.builtin.template:
+    src: templates/nginx-runner.conf.j2
+    dest: "{{ paths.data }}/{{ host_prefix }}_nginx-proxy/nginx-runner.conf"
+    owner: "{{ infrastructure_account.user }}"
+    group: "{{ infrastructure_account.group }}"
+    mode: '0755'
+
+- name: Generate Docker Compose file
+  ansible.builtin.template:
+    src: templates/runner-compose.yaml.j2
+    dest: "{{ paths.provision }}/runner-compose.yaml"
+    owner: "{{ infrastructure_account.user }}"
+    group: "{{ infrastructure_account.group }}"
+    mode: '0755'

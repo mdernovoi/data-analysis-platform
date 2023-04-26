@@ -1,0 +1,1 @@
+The configuration file is generated from a template in the `project_source_dir/infrastructure/ansible/role_runner-host` role. The template is located in the `templates` subeidrectory of the role.

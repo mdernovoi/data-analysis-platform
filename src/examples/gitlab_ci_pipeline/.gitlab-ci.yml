@@ -1,0 +1,24 @@
+
+stages:
+  - test
+
+test_mlflow_python:
+  image:
+    name: {{TODO:REPLACE}}/dev/environments/dev-python-r:latest
+  stage: test
+  interruptible: true
+  rules:
+    - if: $CI_COMMIT_BRANCH || $CI_COMMIT_TAG
+  variables:
+    SECURE_FILES_DOWNLOAD_PATH: './secrets/'
+    MLFLOW_URL: "https://{{TODO:REPLACE}}"
+    MINIO_URL: "https://{{TODO:REPLACE}}"
+  script:
+    # Download tool for secure_files management and
+    # download secure_files to SECURE_FILES_DOWNLOAD_PATH.
+    - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
+    - pip install -r requirements.txt
+    - python3 scripts/main.py ${MLFLOW_URL} ${MINIO_URL}
+  
+
+

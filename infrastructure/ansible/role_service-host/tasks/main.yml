@@ -1,0 +1,51 @@
+---
+# tasks file for role_service-host
+
+### Configure static dns entries (if no global dns is available)
+- name: Create static dns entries if required
+  vars: 
+    dns_template: |
+      {% for host in extra_hosts %}
+        {{ host.ip }}   {{ host.name }}
+      {% endfor %}
+      
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    block: "{{ dns_template }}"
+  when: use_static_dns
+
+### Generate configuration files 
+- name: Generate Gitlab configuration file
+  ansible.builtin.template:
+    src: templates/gitlab.rb.j2
+    dest: "{{ paths.data }}/{{ host_prefix }}_gitlab/etc.gitlab/gitlab.rb"
+    owner: "{{ infrastructure_account.user }}"
+    group: "{{ infrastructure_account.group }}"
+    mode: '0755'
+
+- name: Generate Nginx configuration file
+  ansible.builtin.template:
+    src: templates/nginx-service.conf.j2
+    dest: "{{ paths.data }}/{{ host_prefix }}_nginx-proxy/nginx-service.conf"
+    owner: "{{ infrastructure_account.user }}"
+    group: "{{ infrastructure_account.group }}"
+    mode: '0755'
+
+- name: Generate Docker Compose file
+  ansible.builtin.template:
+    src: templates/service-compose.yaml.j2
+    dest: "{{ paths.provision }}/service-compose.yaml"
+    owner: "{{ infrastructure_account.user }}"
+    group: "{{ infrastructure_account.group }}"
+    mode: '0755'
+
+### Provision object storage (minio)
+# This script is idempotent and can be executed multiple times.
+# Ignore_errors allows to continue execution if the object storage is not reachable.
+- name: Provision minio
+  ansible.builtin.script: "{{ paths.provision }}/scripts/{{ host_prefix }}/provision_minio.py minio.{{ project_domain_name }}"
+  args:
+    executable: "{{ paths.venv }}/{{ host_prefix }}/bin/python"
+  ignore_errors: true
+
+

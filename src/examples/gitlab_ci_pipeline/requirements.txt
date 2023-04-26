@@ -1,0 +1,9 @@
+
+# MLflow
+mlflow == 2.3.0
+
+# S3 storage access
+boto3 == 1.26.119
+
+# Misc
+python-dotenv == 1.0.0

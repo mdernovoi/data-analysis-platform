@@ -1,0 +1,6 @@
+[nodes]
+service_host ansible_host=127.0.0.1 ansible_connection=local
+runner_host  ansible_host=127.0.0.1 ansible_connection=local
+
+[nodes:vars]
+ansible_user=dap

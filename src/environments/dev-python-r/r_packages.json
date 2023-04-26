@@ -1,0 +1,16 @@
+{
+    "packages": [
+      {
+        "name": "tidyverse",
+        "version": "latest"
+      },
+      {
+        "name": "data.table",
+        "version": "latest"
+      },
+      {
+        "name": "plotly",
+        "version": "latest"
+      }
+    ]
+  }

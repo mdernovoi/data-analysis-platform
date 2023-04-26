@@ -1,0 +1,55 @@
+
+
+stages:
+  - build_dev_base
+  - build_dev_base_children
+
+build_dev-base:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.1-debug
+    entrypoint: [""]
+  stage: build_dev_base
+  interruptible: true
+  rules:
+    - if: $CI_COMMIT_BRANCH || $CI_COMMIT_TAG
+      changes:
+        - dev-base/*
+  variables:
+    IMAGE_NAME: "dev-base"
+    WORKING_DIR: "dev-base"
+  before_script:
+    - /bin/sh build_scripts/before-docker-build.sh $IMAGE_NAME
+  after_script:
+    - /bin/sh build_scripts/after-docker-build.sh $IMAGE_NAME
+  script:
+    - /kaniko/executor
+      --context "${WORKING_DIR}"
+      --dockerfile "${WORKING_DIR}/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/$IMAGE_NAME:${CI_COMMIT_TAG}"
+  
+build_dev-python-r:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.1-debug
+    entrypoint: [""]
+  stage: build_dev_base_children
+  interruptible: true
+  rules:
+    - if: $CI_COMMIT_BRANCH || $CI_COMMIT_TAG
+      changes:
+        - dev-python-r/*
+        - dev-base/*
+  variables:
+    IMAGE_NAME: "dev-python-r"
+    WORKING_DIR: "dev-python-r"
+  before_script:
+    - /bin/sh build_scripts/before-docker-build.sh $IMAGE_NAME
+  after_script:
+    - /bin/sh build_scripts/after-docker-build.sh $IMAGE_NAME
+  script:
+    - /kaniko/executor
+      --context "${WORKING_DIR}"
+      --dockerfile "${WORKING_DIR}/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}/$IMAGE_NAME:${CI_COMMIT_TAG}"
+
+
+
