@@ -14,7 +14,7 @@ from pathlib import Path
 
 def main (arguments: list) -> None:
 
-    # Configure mlflow
+    # Configure mlflow and minio
     mlflow_url = arguments[1]
     minio_url = arguments[2] 
 
@@ -23,9 +23,7 @@ def main (arguments: list) -> None:
 
     # File with mlflow secrets.
     # It has to be uploaded as a secure_file to gitlab: settings --> ci --> secure files
-    # example content:
-    # MINIO_ACCESS_KEY=fshjsdjfsdfhjsj
-    # MINIO_SECRET_KEY=fjsaoiarfjafslkjsdaflisakl
+    # Reference the secrets_templates folder
     dotenv_path = Path("secrets", "mlflow_MINIO_KEYS.env")
     load_dotenv(dotenv_path=dotenv_path)
 

@@ -1,11 +1,12 @@
 
-# Default repo
+# Default CRAN repo
 local({repos <- getOption("repos")
        repos["CRAN"] <- "https://cloud.r-project.org" 
        options(repos=repos)
 })
 
 
+# Install package for system dependency management
 install.packages("rspm")
 library(rspm)
 
@@ -17,6 +18,7 @@ library(rjson)
 library(devtools)
 library(stringi)
 
+# Read a list of required packages and install them.
 install_r_packages <- function(file_name) {
   
   if (!file.exists(file_name)) {
@@ -46,6 +48,7 @@ install_r_packages <- function(file_name) {
   }
 }
 
+# Treat first command line argument as file name with dependencies and install required packages
 args <- commandArgs(trailingOnly=TRUE)
 install_r_packages(args[1])
 

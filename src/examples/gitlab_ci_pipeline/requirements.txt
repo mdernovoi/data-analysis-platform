@@ -1,9 +1,10 @@
 
-# MLflow
+## Experiment tracking
 mlflow == 2.3.0
 
-# S3 storage access
+## Storage
+# S3
 boto3 == 1.26.119
 
-# Misc
+## General
 python-dotenv == 1.0.0

@@ -26,7 +26,7 @@ c.NotebookApp.open_browser = False
 
 # Reference: secrets/jupyter_notebook_password.txt
 # TODO: insert dynamically
-c.NotebookApp.password = 'argon2:$argon2id$v=19$m=10240,t=10,p=8$9BGVnM6SZ7ukiJ4pizD9MA$KjoSD/HNoGJ9oUN+QvYXCRPCYX6Wqz5F9c6066gOKHI'
+c.NotebookApp.password = {{TODO:REPLACE}} 
 
 ## Forces users to use a password for the Notebook server.
 #                        This is useful in a multi user environment, for instance when

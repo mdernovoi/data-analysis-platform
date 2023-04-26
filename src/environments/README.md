@@ -5,6 +5,8 @@
 
 > :warning: Pay attention to comments before and after the `{{TODO:REPLACE}}` placeholders for further details.
 
+2) Push repository to a GitLab project and let GitLab build all Docker environments.
+
 ### Generate SSH keys
 
 ```

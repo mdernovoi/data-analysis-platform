@@ -76,4 +76,4 @@ USER devuser
 
 CMD ["/bin/bash", "docker-entrypoint.sh"]
 
-EXPOSE 22 8888
+EXPOSE 22
