@@ -6,7 +6,7 @@
 
 Follow the [official guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) or execute the commands below.
 
-> :warning: Execute as a non-root user! Otherwise paths will be messed up.
+> :warning: Execute as a non-root user! Otherwise, paths will be messed up.
 
 ```Shell
 sudo apt-get install -y python3-pip && \
@@ -17,23 +17,23 @@ sudo apt-get install -y python3-pip && \
 ```
 ### Configure services and secrets
 
-TODO: explain in detail how to configure the ingrastructure.
+TODO: :construction: **Currently under construction** :construction:
 
 Search for `{{TODO:REPLACE}}` in the `infrastructure` directory and fill in all missing values. 
 
-Tip: you can use Visual Studio Code or `egrep` to search for strings in multiple files at the same time.
+**Tip**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
 
 #### Services
 
-...
+TODO :construction: **Currently under construction** :construction:
 
 #### Secrets
 
-The `infrastructure/secrets_templates` contains templates for secrets required by the Data Analysis Platform.
+The `infrastructure/secrets_templates` contains templates for secrets the Data Analysis Platform requires.
 
-> :warning: Currently only publicly signed certificates are supported (e.g., signed by LetsEncrypt). This limitation will be removed in further versions (reference the `Roadmap` section of the main `README.md`).
+> :warning: Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). Further versions will remove this limitation (reference the `Roadmap` section of the main `README.md`).
 
-1) Copy all templates to the `infrastructure/secrets` directory which is ignored by git.
+1) Copy all templates to the `infrastructure/secrets` directory, which Git ignores.
 
 2) Replace all `{{TODO:REPLACE}}` placeholders in secrets with actual values.
 
@@ -44,7 +44,7 @@ The `infrastructure/secrets_templates` contains templates for secrets required b
 
 #### Service host
 
-1) In the `infrastructure/ansible` directory execute:
+1) In the `infrastructure/ansible` directory, execute:
 
 ```Shell
 ansible-playbook -i hosts --ask-become-pass provision_service-host.yml
@@ -70,14 +70,14 @@ docker compose \
   - Create an access/secret key pair for this user.
   - Save the keys in the `infrastructure/secrets/mlflow_MINIO_KEYS.env` file.
 
-5) (If aplicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
+5) (If applicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
 
   - Set the initial root account password.
   - Save this password somewhere (e.g., in `infrastructure/secrets/portainer_credentials.txt`).
 
-> :warning: If you are too slow you might encounter a timeout and Portainer will refuse to set the initial password prompting for a login. If this happens delete all files under `{{ path_base }}` from the `infrastructure/ansible/global_vars.yml` file and restart with step 1.
+> :warning: If you are too slow, you might encounter a timeout, and Portainer will refuse to set the initial password, prompting a login. If this happens, delete all files under `{{ path_base }}` from the `infrastructure/ansible/global_vars.yml` file and restart with step 1.
 
-6) In the `infrastructure/ansible` directory execute:
+6) In the `infrastructure/ansible` directory, execute:
 
 ```Shell
 ansible-playbook -i hosts --ask-become-pass provision_service-host.yml
@@ -103,17 +103,17 @@ docker compose \
   up
 ```
 
-**Tip**: Add the `--detach` option to the command above to start the containers in the backgorund.
+**Tip**: Add the `--detach` option to the command above to start the containers in the background.
 
-9) Now wait for GitLab to initialize (this might take several minutes) and continue with the provisioning of runner services (can be done on the same machine).
+9) Now wait for GitLab to initialize (this might take several minutes) and continue with the provisioning of runner services (it can be done on the same machine).
 
-**Tip**: The initial GitLab user is `root` and the passwor is stored in `infrastructure/secrets/gitlab_initial_root_password.txt`.
+**Tip**: The initial GitLab user is `root`, and the password is stored in `infrastructure/secrets/gitlab_initial_root_password.txt`.
 
 #### Runner host
 
 1) Provision the service host first.
 
-2) In the `infrastructure/ansible` directory execute:
+2) In the `infrastructure/ansible` directory, execute:
 
 ```Shell
 ansible-playbook -i hosts --ask-become-pass provision_runner-host.yml
@@ -131,20 +131,20 @@ docker compose \
   up
 ```
 
-**Tip**: Add the `--detach` option to the command above to start the containers in the backgorund.
+**Tip**: Add the `--detach` option to the command above to start the containers in the background.
 
-4) (If aplicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
+4) (If applicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
 
   - Set the initial root account password.
   - Save this password somewhere (e.g., in `infrastructure/secrets/portainer_credentials.txt`).
 
-> :warning: If you are too slow you might encounter a timeout and Portainer will refuse to set the initial password prompting for a login. If this happens delete all files under `{{ path_base }}` from the `infrastructure/ansible/global_vars.yml` file and restart with step 1.
+> :warning: If you are too slow, you might encounter a timeout, and Portainer will refuse to set the initial password, prompting a login. If this happens, delete all files under `{{ path_base }}` from the `infrastructure/ansible/global_vars.yml` file and restart with step 1.
 
 5) Register a new GitLab Runner:
 
-  - Open the GitLab UI under `https://gitlab.mydomain.com` --> Admin --> CI/CD  --> Runenrs --> Register an instance runner and copy the `Registration token`.
+  - Open the GitLab UI under `https://gitlab.mydomain.com` --> Admin --> CI/CD  --> Runners --> Register an instance runner and copy the `Registration token`.
   - Replace the `{{ ... }}` placeholders in the command below with values from `infrastructure/ansible/global_vars.yml`.
-  - Set the value for the `--registration-token` in the command below.
+  - Set the `--registration-token` value in the command below.
   - Execute:
 
     ```Shell
@@ -163,9 +163,9 @@ docker compose \
     --access-level="not_protected"
     ```
   
-  - Set the `concurrent` value in the runner configuration file to a value greater than one to allow concurrent job execution. The configuration file is located in `{{ paths.data }}/{{ host_prefix }}_gitlab-runner-generic-1/etc.gitlab-runner/config.toml`.
+  - Set the `concurrent` value in the runner configuration file to greater than one to allow concurrent job execution. The configuration file is located in `{{ paths.data }}/{{ host_prefix }}_gitlab-runner-generic-1/etc.gitlab-runner/config.toml`.
 
-6) Now you are ready to use the Data Analysis Platform.
+6) Now, you are ready to use the Data Analysis Platform.
 
   Check out the [HowTo section](index.md) for further steps.
 
