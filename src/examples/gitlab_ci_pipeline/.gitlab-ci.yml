@@ -19,6 +19,7 @@ test_mlflow_python:
     # Download tool for secure_files management and
     # download secure_files to SECURE_FILES_DOWNLOAD_PATH.
     - curl -s https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer | bash
+    # Execute normal project code
     - pip install -r requirements.txt
     - python3 scripts/main.py ${MLFLOW_URL} ${MINIO_URL}
   

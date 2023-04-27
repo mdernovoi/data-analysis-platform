@@ -24,7 +24,7 @@ c.NotebookApp.open_browser = False
 #  password.
 #  Default: ''
 
-# Reference: secrets/jupyter_notebook_password.txt
+# Reference: secrets_templates/jupyter_notebook_password.txt
 # TODO: insert dynamically
 c.NotebookApp.password = {{TODO:REPLACE}} 
 

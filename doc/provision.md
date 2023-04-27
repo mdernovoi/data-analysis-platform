@@ -27,24 +27,31 @@ sudo apt-get install -y python3-pip && \
 
 TODO: :construction: **Currently under construction** :construction:
 
-Search for `{{TODO:REPLACE}}` in the `infrastructure` directory and fill in all missing values. 
+#### Infrastructure
 
-**Tip**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
-
-#### Services
-
-TODO :construction: **Currently under construction** :construction:
-
-#### Secrets
-
-The `infrastructure/secrets_templates` contains templates for secrets the Data Analysis Platform requires.
+The `infrastructure/secrets_templates` directory contains templates of secrets the Data Analysis Platform requires.
 
 > :warning: Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). Further versions will remove this limitation (reference the `Roadmap` section of the main `README.md`).
 
-1) Copy all templates to the `infrastructure/secrets` directory, which Git ignores.
+1) Copy all secrets templates from `infrastructure/secrets_templates`  to the `infrastructure/secrets` directory, which Git ignores.
 
-2) Replace all `{{TODO:REPLACE}}` placeholders in secrets with actual values.
+2) Search for `{{TODO:REPLACE}}` in the `infrastructure` directory and fill in all missing values. 
 
+  **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
+
+TODO :construction: **Currently under construction** :construction:
+
+#### Src
+
+**NOTE**: Steps in this section are not strictly necessary to be able to use the Data Analysis Platform. However, the `src` directory contains very useful code for actual data analysis projects (Docker environments, examples of GitLab Pipelines, etc.).
+
+1) Copy all secrets templates from `secrets_templates` to the corresponding `secrets` directory, which Git ignores. 
+
+2) Search for `{{TODO:REPLACE}}` in the `src` directory and fill in all missing values. 
+
+  **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
+
+TODO :construction: **Currently under construction** :construction:
 
 ### Deploy services
 
@@ -58,7 +65,7 @@ The `infrastructure/secrets_templates` contains templates for secrets the Data A
 ansible-playbook -i hosts --ask-become-pass provision_service-host.yml
 ```
 
-> **NOTE**: Ignore the "Provision minio" task failure. This is by design.
+> **NOTE**: Ignore the "Provision minio" task failure. This is by design since the Minio still needs to be deployed and thus can not be provisioned.
 
 2) Log out and log back in to apply group assignment changes and load environment variables.
 
@@ -72,26 +79,27 @@ docker compose \
   up
 ```
 
-4) Open the Minio UI in the browser at `https://minio.mydomain.com` and:
-
-  - Create a new user for MLflow.
-  - Create an access/secret key pair for this user.
-  - Save the keys in the `infrastructure/secrets/mlflow_MINIO_KEYS.env` file.
-
-5) (If applicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
+4) (If applicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
 
   - Set the initial root account password.
   - Save this password somewhere (e.g., in `infrastructure/secrets/portainer_credentials.txt`).
 
 > :warning: If you are too slow, you might encounter a timeout, and Portainer will refuse to set the initial password, prompting a login. If this happens, delete all files under `{{ path_base }}` from the `infrastructure/ansible/global_vars.yml` file and restart with step 1.
 
-6) In the `infrastructure/ansible` directory, execute:
+5) Open the Minio UI in the browser at `https://minio.mydomain.com` and:
+
+  - Log in with the credintial from `infrastructure/secrets/minio_MINIO_SECRETS.env`.
+  - Create a new user with a `readwrite` policy for MLflow.
+  - Create an access/secret key pair for this user (`Service Accounts` tab in user settings).
+  - Save the keys in the `infrastructure/secrets/mlflow_MINIO_KEYS.env` file.
+
+6) In a new terminal in the `infrastructure/ansible` directory, execute:
 
 ```Shell
 ansible-playbook -i hosts --ask-become-pass provision_service-host.yml
 ```
 
-This will provision the S3 storage for MLflow.
+This will provision the S3 storage for MLflow. Verify in the Minio web UI that a `mlflow` bucket has been created.
 
 Now all tasks should execute successfully.
 
@@ -111,13 +119,23 @@ docker compose \
   up
 ```
 
-**Tip**: Add the `--detach` option to the command above to start the containers in the background.
+**TIP**: Add the `--detach` option to the command above to start the containers in the background.
 
 9) Now wait for GitLab to initialize (this might take several minutes) and continue with the provisioning of runner services (it can be done on the same machine).
 
-**Tip**: The initial GitLab user is `root`, and the password is stored in `infrastructure/secrets/gitlab_initial_root_password.txt`.
+**TIP**: The initial GitLab user is `root`, and the password is stored in `infrastructure/secrets/gitlab_initial_root_password.txt`.
+
+**TIP**: Check out all provisioned services:
+
+- `portainer-service.{{ project_domain_name }}`
+- `pgadmin.{{ project_domain_name }}`
+- `mlflow.{{ project_domain_name }}`
+- `minio.{{ project_domain_name }}`
+- `gitlab.{{ project_domain_name }}`
 
 #### Runner host
+
+> :warning: Due to port binding conflicts the reverse proxy for runner services listens on port `4431` insted of the usual `443`. This is configured in `infrastructure/ansible/role_runner-host/templates/runner-compose.yaml.j2`.
 
 1) Provision the service host first.
 
@@ -139,9 +157,9 @@ docker compose \
   up
 ```
 
-**Tip**: Add the `--detach` option to the command above to start the containers in the background.
+**TIP**: Add the `--detach` option to the command above to start the containers in the background.
 
-4) (If applicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
+4) (If applicable) Open the Portainer UI in the browser at `https://portainer-runner.mydomain.com:4431` and:
 
   - Set the initial root account password.
   - Save this password somewhere (e.g., in `infrastructure/secrets/portainer_credentials.txt`).
@@ -172,6 +190,7 @@ docker compose \
     ```
   
   - Set the `concurrent` value in the runner configuration file to greater than one to allow concurrent job execution. The configuration file is located in `{{ paths.data }}/{{ host_prefix }}_gitlab-runner-generic-1/etc.gitlab-runner/config.toml`.
+  - You should see a registered runner in the GitLab UI and the runner docker container should stop printing error messages.
 
 6) Now, you are ready to use the Data Analysis Platform.
 

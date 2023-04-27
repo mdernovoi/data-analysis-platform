@@ -68,6 +68,7 @@ Please suggest any improvements or express wishes in the Issues section. A pull 
 - [ ] Render documentation on GitHub Pages or readthedocs.io.
 - [ ] Add linting of code (there is little actual code to analyze, hence the low priority).
 - [ ] Add static code analysis (there is little actual code to analyze, hence the low priority).
+- [ ] Add missing service redirect in nginx config (currently the first configured server (pgadmin) is returned).
 
 
 

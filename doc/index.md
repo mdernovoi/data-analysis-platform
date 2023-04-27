@@ -8,3 +8,4 @@
 
 ## HowTo
 
+Check out the examples and development environments in the `src` directory.
