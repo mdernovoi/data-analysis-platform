@@ -8,7 +8,6 @@ The Data Analysis Platform is a powerful and versatile infrastructure framework 
 
 This platform is entirely **technology agnostic**, making it suitable for use with any tool or language (BYOS - Bring Your Own Software principle). It is also designed with enterprise use in mind and offers easy deployment and built-in security features.
 
-:construction: This project is currently under active development. Therefore, certain limitations exist. Nevertheless, **you can already use the platform** for your data analyses since releases are stable and work perfectly fine in several production environments.
 
 ## Usage
 
