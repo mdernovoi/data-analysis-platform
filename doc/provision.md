@@ -194,5 +194,9 @@ docker compose \
 
 6) Now, you are ready to use the Data Analysis Platform.
 
+  **TIP**: Check out all provisioned services:
+
+  - `portainer-runner.{{ project_domain_name }}`
+
   Check out the [HowTo section](index.md) for further steps.
 
