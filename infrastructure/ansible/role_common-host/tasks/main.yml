@@ -1,0 +1,127 @@
+---
+# tasks file for role_common-host
+
+### Configure docker
+- name: Configure docker daemon
+  ansible.builtin.copy:
+    dest: /etc/docker/daemon.json
+    content: "{{ docker_daemon_config.daemon_json_config_file | to_nice_json }}"
+  register: docker_configured
+
+- name: Restart docker if required
+  systemd:
+   name: docker
+   state: restarted
+  when: docker_configured.changed 
+
+# verify with: `sudo journalctl -u systemd-journald -o json-pretty | grep MAX_USE`
+- name: Configure journald storage for docker logging (see `Configure docker daemon`)
+  ansible.builtin.blockinfile:
+    path: /etc/systemd/journald.conf
+    block: |
+      Storage=persistent
+      SystemMaxUse={{ journlad_config.SystemMaxUse }}
+      SystemKeepFree={{ journlad_config.SystemKeepFree }}
+  register: journald_configured
+
+- name: Reload systemd-journald if required
+  systemd:
+   name: systemd-journald
+   state: restarted 
+  when: journald_configured.changed
+
+### Create required directories
+- name: Create infrastructure directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: "directory"
+    mode: '0755'
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+  when: "item.type == 'directory'"
+  loop: "{{ data + secrets }}" 
+
+- name: Create directories for infrastructure files
+  ansible.builtin.file:
+    path: "{{ item.path | dirname }}"
+    state: "directory"
+    mode: '0755'
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+  when: "item.type == 'file'"
+  loop: "{{ data  + secrets }}" 
+
+### Copy required files
+- name: Copy infrastructure files if required
+  ansible.builtin.copy:
+    src: "{{ item.source }}"
+    dest: "{{ item.path }}"
+    mode: '0755'
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+  when: "item.source is defined"
+  loop: "{{ data }}"
+
+- name: Copy secrets
+  ansible.builtin.copy:
+    src: "{{ item.source }}"
+    dest: "{{ item.path }}"
+    mode: '0600'
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+  loop: "{{ secrets }}" 
+
+- name: Copy scripts 
+  ansible.builtin.copy:
+    src: "{{ item }}/"
+    dest: "{{ paths.provision }}/scripts/{{ host_prefix }}"
+    mode: '0755'
+    owner: "{{ infrastructure_account.user }}"
+    group: "{{ infrastructure_account.group }}"
+  loop: "{{ role_paths.scripts }}"
+  when: role_paths.scripts is defined
+
+### Prepare Python script execution
+- name: Ensure python virtual environments can be created
+  ansible.builtin.apt:
+    name: 
+      - python3-pip
+      - python3-venv
+    state: present
+
+- name: Check if python virtual einvironment should be created
+  ansible.builtin.stat:
+    path: "{{ paths.provision }}/scripts/{{ host_prefix }}/requirements.txt"
+  register: venv_required
+
+- name: Create python virtual environment for script execution if required
+  ansible.builtin.pip:
+    requirements: "{{ paths.provision }}/scripts/{{ host_prefix }}/requirements.txt"
+    virtualenv: "{{ paths.venv }}/{{ host_prefix }}"
+    virtualenv_command: python3 -m venv
+    virtualenv_site_packages: false
+  when: venv_required.stat.exists
+
+- name: Change ownership of virtual environments
+  ansible.builtin.file:
+    path: "{{ paths.venv }}"
+    state: directory
+    recurse: True
+    owner: "{{ infrastructure_account.user }}"
+    group: "{{ infrastructure_account.group }}"
+    mode: '0755'
+
+### Configure global environment variables 
+- name: Export environment variables for docker compose parametrization
+  ansible.builtin.blockinfile:
+    path: /etc/environment
+    block: |
+      PLATFORM_PATH_BASE="{{ path_base }}"
+      PLATFORM_PATH_SECRETS="{{ paths.secrets }}"
+      PLATFORM_PATH_DATA="{{ paths.data }}"
+      PLATFORM_PATH_PROVISION="{{ paths.provision }}"
+      PLATFORM_PATH_VENV="{{ paths.venv }}"
+
+
+
+

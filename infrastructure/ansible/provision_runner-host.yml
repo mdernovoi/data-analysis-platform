@@ -1,0 +1,13 @@
+
+---
+- name: Provision runner host
+  hosts: runner_host
+  vars_files:
+    - global_vars.yml
+    - role_runner-host/vars/main.yml
+  become: true
+  roles:
+    - role_docker
+    - role_common-host
+    - role_runner-host
+

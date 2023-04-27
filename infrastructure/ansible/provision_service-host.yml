@@ -1,0 +1,13 @@
+
+---
+- name: Provision service host
+  hosts: service_host
+  vars_files:
+    - global_vars.yml
+    - role_service-host/vars/main.yml
+  become: true
+  roles:
+    - role_docker
+    - role_common-host
+    - role_service-host
+

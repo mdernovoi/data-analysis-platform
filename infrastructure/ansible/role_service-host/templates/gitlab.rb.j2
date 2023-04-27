@@ -1,0 +1,58 @@
+
+external_url 'https://gitlab.{{ project_domain_name }}'
+
+#### Change the initial default admin password and shared runner registration tokens.
+####! **Only applicable on initial setup, changing these settings after database
+####!   is created and seeded won't yield any change.**
+gitlab_rails['initial_root_password'] = File.read('/run/secrets/gitlab_initial_root_password.txt').gsub("\n", "")
+
+##################
+### Networking ###
+##################
+
+##! **Override only if you use a reverse proxy**
+##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#setting-the-nginx-listen-port
+nginx['listen_port'] = 80
+
+##! **Override only if your reverse proxy internally communicates over HTTP**
+##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#supporting-proxied-ssl
+nginx['listen_https'] = false
+
+### GitLab Shell settings for GitLab
+gitlab_rails['gitlab_shell_ssh_port'] = 2222
+
+################################################################################
+## Container Registry settings
+##! Docs: https://docs.gitlab.com/ee/administration/packages/container_registry.html
+################################################################################
+
+registry_external_url 'https://gitlab-registry.{{ project_domain_name }}:5005'
+
+### Settings used by GitLab application
+gitlab_rails['registry_enabled'] = true
+gitlab_rails['registry_host'] = "gitlab-registry.{{ project_domain_name }}"
+gitlab_rails['registry_port'] = "5005"
+gitlab_rails['registry_path'] = "/var/opt/gitlab/gitlab-rails/shared/registry"
+
+################################################################################
+## Registry NGINX
+################################################################################
+
+# All the settings defined in the "GitLab Nginx" section are also available in
+# this "Registry NGINX" section, using the key `registry_nginx`.  However, those
+# settings should be explicitly set. That is, settings given as
+# `nginx['some_setting']` WILL NOT be automatically replicated as
+# `registry_nginx['some_setting']` and should be set separately.
+
+# Below you can find settings that are exclusive to "Registry NGINX"
+registry_nginx['enable'] = true
+
+# When the registry is automatically enabled using the same domain as `external_url`,
+# it listens on this port
+registry_nginx['listen_port'] = 5005
+registry_nginx['listen_https'] = true
+registry_nginx['redirect_http_to_https'] = true
+
+registry_nginx['ssl_certificate'] = "/run/secrets/fullchain.pem"
+registry_nginx['ssl_certificate_key'] = "/run/secrets/privkey.pem"
+

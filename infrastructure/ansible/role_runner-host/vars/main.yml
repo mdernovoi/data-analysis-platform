@@ -1,0 +1,80 @@
+---
+# vars file for role_runner-host
+
+### Static dns entries if no global dns is available.
+extra_hosts:
+  - name: "{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "pgadmin.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "postgres-service.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "postgres-data.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "mlflow.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "minio.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "minio-console.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "gitlab.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "gitlab-registry.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "portainer-service.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "portainer-runner.{{ project_domain_name }}"
+    ip: "127.0.0.1"
+
+### Data directories to be created
+host_prefix: "runner"
+data:
+## nginx-proxy
+# Configuration file is generated from a template in the `project_source_dir/infrastructure/ansible/role_runner-host` role.
+- path: "{{ paths.data }}/{{ host_prefix }}_nginx-proxy/"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## gitlab-runner-generic-1
+  # TODO: figure out how caching works.
+- path: "{{ paths.data }}/{{ host_prefix }}_gitlab-runner-generic-1/cache"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.data }}/{{ host_prefix }}_gitlab-runner-generic-1/etc.gitlab-runner"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+  # Configuration file is generated from a template in the `project_source_dir/infrastructure/ansible/role_runner-host` role.
+- path: "{{ paths.data }}/{{ host_prefix }}_gitlab-runner-generic-1/etc.gitlab-runner/config_templates"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## portainer
+- path: "{{ paths.data }}/{{ host_prefix }}_portainer/data"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+### Secrets to be copied
+secrets:
+## tls
+- path: "{{ paths.secrets }}/fullchain.pem"
+  source: "../secrets/fullchain.pem"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.secrets }}/privkey.pem"
+  source: "../secrets/privkey.pem"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.secrets }}/dhparam.pem"
+  source: "../secrets/dhparam.pem"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+
