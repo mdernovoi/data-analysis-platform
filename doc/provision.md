@@ -2,6 +2,14 @@
 
 ## Initial provisioning
 
+> :warning: It is recommended to install the Data Analysis Platform on a dedicated Host (physical or virtual). Several changes to system settings are made during provisioning. Alternatively, you can review the Ansible tasks in `infrastructure/ansible` to verify compatibility with your current setup.
+>
+> A non-exhaustive list of system changes:
+> - Installation of Docker
+> - Configuration of Docker logging (journald)
+> - Configuration of journald
+> - Static DNS entries in `/etc/hosts`
+
 ### Install Ansible
 
 Follow the [official guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) or execute the commands below.
