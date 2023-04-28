@@ -14,8 +14,11 @@ For installation and usage instructions consult the documentation in the `doc/` 
 
 Start here:
 
-- [How does the Data Analysis Platform work](doc/architecture.md)
 - [Initial installation and provisioning](doc/provision.md)
+
+## Questions?
+
+If you have any questions or need help, please do not hesitate to ask them in the `Discussions` section.
 
 ## Improvements and Suggestions
 
