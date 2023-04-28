@@ -32,6 +32,8 @@ TODO: :construction: **Currently under construction** :construction:
 The `infrastructure/secrets_templates` directory contains templates of secrets the Data Analysis Platform requires.
 
 > :warning: Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). Further versions will remove this limitation (reference the `Roadmap` section of the main `README.md`).
+>
+> **TIP**: You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708).
 
 1) Copy all secrets templates from `infrastructure/secrets_templates`  to the `infrastructure/secrets` directory, which Git ignores.
 
