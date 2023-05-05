@@ -1,3 +1,0 @@
-The configuration file for the **service** host generated from a template in the `project_source_dir/infrastructure/ansible/role_service-host` role. The template is located in the `templates` subeidrectory of the role.
-
-The configuration file for the **runner** host generated from a template in the `project_source_dir/infrastructure/ansible/role_runner-host` role. The template is located in the `templates` subeidrectory of the role.

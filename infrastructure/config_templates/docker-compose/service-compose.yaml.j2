@@ -1,0 +1,316 @@
+
+
+services:
+         
+  nginx-proxy:
+  # config created with https://www.digitalocean.com/community/tools/nginx
+    image: nginx:1.24
+    deploy:
+        replicas: 1
+        restart_policy:
+          condition: unless-stopped
+    networks:
+      - data-analysis-platform_service
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - 443:443
+      - 54321:54321   # postgres-service
+      - 54322:54322   # postgres-data
+      - 2222:2222     # gitlab ssh
+    profiles:
+      - first-stage
+      - all
+    volumes:
+    # data
+      - type: bind
+        source: {{ paths.data }}/{{ host_prefix }}_nginx-proxy/nginx-service.conf
+        target: /etc/nginx/nginx.conf
+    # secrets
+      - type: bind
+        source: {{ paths.secrets }}/fullchain.pem
+        target: /etc/nginx/ssl/fullchain.pem
+      - type: bind
+        source: {{ paths.secrets }}/privkey.pem
+        target: /etc/nginx/ssl/privkey.pem
+      - type: bind
+        source: {{ paths.secrets }}/dhparam.pem
+        target: /etc/nginx/dhparam.pem
+  
+  portainer:
+    # refs:
+    # - https://docs.portainer.io/advanced/reverse-proxy/nginx
+    # - https://docs.portainer.io/start/install-ce/server/docker/linux
+    image: portainer/portainer-ce:linux-amd64-2.18.1
+    deploy:
+        replicas: 1
+        restart_policy:
+          condition: unless-stopped
+    environment:
+      - TZ=Europe/Amsterdam
+      - VIRTUAL_HOST=portainer.{{ project_domain_name }}
+      - VIRTUAL_PORT=9000
+    networks:
+      data-analysis-platform_service:
+        aliases:
+          - portainer-service.{{ project_domain_name }}
+    profiles:
+      - first-stage
+      - all
+    volumes:
+    # data
+      - type: bind
+        source: {{ paths.data }}/{{ host_prefix }}_portainer/data
+        target: /data
+    # docker socket
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
+  pgadmin:
+    # ref: https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html#
+    # ref: https://www.pgadmin.org/docs/pgadmin4/development/config_py.html
+    image: dpage/pgadmin4:7.0
+    deploy:
+        replicas: 1
+        restart_policy:
+          condition: unless-stopped
+    environment:
+      - TZ=Europe/Amsterdam
+      - PGADMIN_DEFAULT_EMAIL=admin@mydomain.com
+      # Security
+      - PGADMIN_DISABLE_POSTFIX=True
+      # NOTE: can be dangerous since arbitrary commands can be run on the server through it
+      # ref: https://www.pgadmin.org/docs/pgadmin4/development/config_py.html
+      - PGADMIN_CONFIG_ENABLE_PSQL=True
+    env_file:
+      - {{ paths.secrets }}/pgadmin_PGADMIN_DEFAULT_PASSWORD.env
+    networks:
+      data-analysis-platform_service:
+        aliases:
+          - pgadmin.{{ project_domain_name }}
+    profiles:
+      - first-stage
+      - all
+    volumes:
+        # Targets must have 'chown -R 5050:5050 <host_directory>' permissions
+        # This is a pgadmin 'feature'...
+    # data
+      - type: bind
+        source: {{ paths.data }}/{{ host_prefix }}_pgadmin/var.lib.pgadmin
+        target: /var/lib/pgadmin/
+
+
+  postgres-service:
+  # ssl is enforced: https://www.percona.com/blog/enabling-and-enforcing-ssl-tls-for-postgresql-connections/
+      image: postgres:15.2
+      command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+      deploy:
+          replicas: 1
+          restart_policy:
+            condition: unless-stopped
+      environment:
+        - TZ=Europe/Amsterdam
+      env_file:
+        - {{ paths.secrets }}/postgres-service_POSTGRES_PASSWORD.env
+        - {{ paths.secrets }}/mlflow_MLFLOW_DATABASE_PASSWORD.env
+      networks:
+        data-analysis-platform_service:
+          aliases:
+            - postgres-service.{{ project_domain_name }}
+      # recommended by https://hub.docker.com/_/postgres
+      shm_size: '512MB' 
+      profiles:
+        - first-stage
+        - all
+      volumes:
+        # Volume for /docker-entrypoint-initdb.d initialization scripts.
+        # These scripts are only run when no database is found and a 
+        # new database must be initialized.
+      # data
+        - type: bind
+          source: {{ paths.data }}/{{ host_prefix }}_postgres-service/docker-entrypoint-initdb.d/
+          target: /docker-entrypoint-initdb.d/
+          # Volume for Postgres data persistency
+          # All database data are stored here
+        - type: bind
+          source: {{ paths.data }}/{{ host_prefix }}_postgres-service/var.lib.postgresql.data/
+          target: /var/lib/postgresql/data
+      # secrets
+        - type: bind
+          source: {{ paths.secrets }}/postgres_fullchain.pem
+          target: /run/secrets/fullchain.pem
+        - type: bind
+          source: {{ paths.secrets }}/postgres_privkey.pem
+          target: /run/secrets/privkey.pem
+        - type: bind
+          source: {{ paths.secrets }}/postgres_dhparam.pem
+          target: /run/secrets/dhparam.pem    
+      # config
+        - type: bind
+          source: {{ paths.data }}/{{ host_prefix }}_postgres-service/postgresql.conf
+          target: /etc/postgresql/postgresql.conf
+        - type: bind
+          source: {{ paths.data }}/{{ host_prefix }}_postgres-service/pg_hba.conf
+          target: /etc/postgresql/pg_hba.conf
+  
+  postgres-data:
+  # ssl is enforced: https://www.percona.com/blog/enabling-and-enforcing-ssl-tls-for-postgresql-connections/
+      image: postgres:15.2
+      command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+      deploy:
+          replicas: 1
+          restart_policy:
+            condition: unless-stopped
+      environment:
+        - TZ=Europe/Amsterdam
+      env_file:
+        - {{ paths.secrets }}/postgres-data_POSTGRES_PASSWORD.env
+      networks:
+        data-analysis-platform_service:
+          aliases:
+            - postgres-data.{{ project_domain_name }}
+      # recommended by https://hub.docker.com/_/postgres
+      shm_size: '512MB' 
+      profiles:
+        - first-stage
+        - all
+      volumes:
+        # Volume for /docker-entrypoint-initdb.d initialization scripts.
+        # These scripts are only run when no database is found and a 
+        # new database must be initialized.
+      # data
+        - type: bind
+          source: {{ paths.data }}/{{ host_prefix }}_postgres-data/docker-entrypoint-initdb.d/
+          target: /docker-entrypoint-initdb.d/
+          # Volume for Postgres data persistency
+          # All database data are stored here
+        - type: bind
+          source: {{ paths.data }}/{{ host_prefix }}_postgres-data/var.lib.postgresql.data/
+          target: /var/lib/postgresql/data
+      # secrets
+        - type: bind
+          source: {{ paths.secrets }}/postgres_fullchain.pem
+          target: /run/secrets/fullchain.pem
+        - type: bind
+          source: {{ paths.secrets }}/postgres_privkey.pem
+          target: /run/secrets/privkey.pem
+        - type: bind
+          source: {{ paths.secrets }}/postgres_dhparam.pem
+          target: /run/secrets/dhparam.pem    
+      # config
+        - type: bind
+          source: {{ paths.data }}/{{ host_prefix }}_postgres-data/postgresql.conf
+          target: /etc/postgresql/postgresql.conf
+        - type: bind
+          source: {{ paths.data }}/{{ host_prefix }}_postgres-data/pg_hba.conf
+          target: /etc/postgresql/pg_hba.conf
+
+
+  # ref: https://github.com/minio/minio/blob/master/docs/config/README.md
+  minio:
+    image: minio/minio:RELEASE.2023-04-20T17-56-55Z
+    deploy:
+        replicas: 1
+        restart_policy:
+          condition: unless-stopped
+    command: server --address "0.0.0.0:9000" --console-address "0.0.0.0:9090"
+    environment:
+      - TZ=Europe/Amsterdam
+      - MINIO_VOLUMES=/data
+      - MINIO_BROWSER_REDIRECT_URL=https://minio-console.{{ project_domain_name }}
+    env_file:
+      - {{ paths.secrets }}/minio_MINIO_SECRETS.env
+    networks:
+      data-analysis-platform_service:
+        aliases:
+          - minio.{{ project_domain_name }}
+    profiles:
+      - first-stage
+      - all
+    volumes:
+    # data
+      - type: bind
+        source: {{ paths.data }}/{{ host_prefix }}_minio/data
+        target: /data
+
+  # requires:
+  # - postgres-service
+  # - minio
+  mlflow:
+    image: mdernovoi/mlflow:v1.2.1
+    deploy:
+        replicas: 1
+        restart_policy:
+          condition: unless-stopped
+    environment:
+      - TZ=Europe/Amsterdam
+      - MLFLOW_HOST=0.0.0.0
+      - MLFLOW_PORT=5000
+    env_file:
+      - {{ paths.secrets }}/mlflow_MINIO_KEYS.env
+      - {{ paths.secrets }}/mlflow_MLFLOW_DATABASE_PASSWORD.env
+      - {{ paths.secrets }}/mlflow_CONNECTION_SECRETS.env
+    command: mlflow server
+    networks:
+      data-analysis-platform_service:
+        aliases:
+          - mlflow.{{ project_domain_name }}
+    profiles:
+      - second-stage
+      - all
+
+  gitlab:
+    image: gitlab/gitlab-ce:15.11.0-ce.0
+    deploy:
+        replicas: 1
+        restart_policy:
+          condition: unless-stopped
+    environment:
+      - TZ=Europe/Amsterdam
+    networks:
+      data-analysis-platform_service:
+        aliases:
+          - gitlab.{{ project_domain_name }}
+          - gitlab-registry.{{ project_domain_name }}
+    ports:
+      - 5005:5005 # container registry
+    shm_size: '512m'
+    profiles:
+      - second-stage
+      - all
+    volumes:
+    # data
+      - type: bind
+        source: {{ paths.data }}/{{ host_prefix }}_gitlab/etc.gitlab
+        target: /etc/gitlab
+      - type: bind
+        source: {{ paths.data }}/{{ host_prefix }}_gitlab/var.log.gitlab
+        target: /var/log/gitlab
+      - type: bind
+        source: {{ paths.data }}/{{ host_prefix }}_gitlab/var.opt.gitlab
+        target: /var/opt/gitlab
+    # secrets
+      - type: bind
+        source: {{ paths.secrets }}/gitlab_initial_root_password.txt
+        target: /run/secrets/gitlab_initial_root_password.txt
+      - type: bind
+        source: {{ paths.secrets }}/fullchain.pem
+        target: /run/secrets/fullchain.pem
+      - type: bind
+        source: {{ paths.secrets }}/privkey.pem
+        target: /run/secrets/privkey.pem
+    # gitlab.rb is copied with ansible to /etc/gitlab/
+
+  
+networks: 
+  data-analysis-platform_service:
+    attachable: true
+    name: data-analysis-platform_service
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.100.0/24
+  
+
+

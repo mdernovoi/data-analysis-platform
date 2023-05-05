@@ -10,7 +10,17 @@
 > - Configuration of journald
 > - Static DNS entries in `/etc/hosts`
 
-### Install Ansible
+### Get the latest release
+
+Download the latest release from `https://github.com/mdernovoi/data-analysis-platform/releases`.
+
+### Install Prerequisites
+
+#### Make
+
+Make sure the `make` command is available. If not, install it with `sudo apt-get install build-essential`.
+
+#### Ansible
 
 Follow the [official guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) or execute the commands below.
 
@@ -27,7 +37,21 @@ sudo apt-get install -y python3-pip && \
 
 TODO: :construction: **Currently under construction** :construction:
 
-#### Infrastructure
+#### Config
+
+The `infrastructure/config_templates` directory contains templates of configuration files the Data Analysis Platform requires.
+
+1) Copy all config file templates from `infrastructure/config_templates`  to the `infrastructure/config` directory, which Git ignores.
+
+**NOTE**: The `config` directory is ignored by git and thus does not change during version upgrades. Please keep all your custom configuration files in it. Files in the  `config_templates` directory can be changed during upgrades.
+
+2) Search for `{{TODO:REPLACE}}` in the `infrastructure/config` directory and fill in all missing values. 
+
+  **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
+
+  For configuration documentation please reference the websites of the indicidual services (e.g. [the gitlab.rb reference](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template))
+
+#### Secrets
 
 The `infrastructure/secrets_templates` directory contains templates of secrets the Data Analysis Platform requires.
 
@@ -36,6 +60,8 @@ The `infrastructure/secrets_templates` directory contains templates of secrets t
 > **TIP**: You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708).
 
 1) Copy all secrets templates from `infrastructure/secrets_templates`  to the `infrastructure/secrets` directory, which Git ignores.
+
+**NOTE**: The `secrets` directory is ignored by git and thus does not change during version upgrades. Please keep all your custom configuration files in it. Files in the  `secrets_templates` directory can be changed during upgrades.
 
 2) Search for `{{TODO:REPLACE}}` in the `infrastructure` directory and fill in all missing values. 
 

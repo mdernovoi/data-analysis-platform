@@ -1,0 +1,7 @@
+
+SERVICE_HOST_MY_SERVICE_CONFIG_DIR := ${INFRASTRUCTURE_CONFIG_DIR}/my_service
+
+install-my-service :
+	@echo "Installing my custom service..."
+	@echo "Copying configuration files to the ansible directory..."
+	cp -r ${SERVICE_HOST_MY_SERVICE_CONFIG_DIR}/*.j2 ${SERVICE_HOST_ANSIBLE_TEMPLATES_DIR}/
