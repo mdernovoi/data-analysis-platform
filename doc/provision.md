@@ -24,7 +24,7 @@ sudo apt-get install -y build-essential \
       diff \
       curl \
       jq \
-      gitt
+      git
 ```
 `sudo apt-get install -ybuild-essential`.
 

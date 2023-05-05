@@ -12,27 +12,18 @@ INFRASTRUCTURE_SECRETS_TEMPLATES_DIR := ${INFRASTRUCTURE_DIR}/secrets_templates
 INFRASTRUCTURE_ANSIBLE_DIR := ${INFRASTRUCTURE_DIR}/ansible
 INFRASTRUCTURE_ANSIBLE_TEMPLATES_DIR := ${INFRASTRUCTURE_DIR}/ansible_templates
 
+MAKEFILES_DIR := makefiles
+MAKEFILES_TEMPLATES_DIR := makefiles_templates
+
 
 install-service :
-	@echo "TODO: Checking if custom configuration exists..."
-	@echo "TODO: Checking if all {{TODO:REPLACE}} placeholders have been replaced with actual values..."
-	@echo "Running ansible..."
-	$(eval CURRENT_WDIR := $(pwd))
-	cd ${INFRASTRUCTURE_ANSIBLE_DIR}
-	#ansible-playbook -i hosts --ask-become-pass provision_service-host.yml
-	cd ${CURRENT_WDIR}
+	@echo "NOT IMPLEMENTED: ..."
 
 install-runner :
-	@echo "TODO: Checking if custom configuration exists..."
-	@echo "TODO: Checking if all {{TODO:REPLACE}} placeholders have been replaced with actual values..."
-	@echo "Running ansible..."
-	$(eval CURRENT_WDIR := $(pwd))
-	cd ${INFRASTRUCTURE_ANSIBLE_DIR}
-	#ansible-playbook -i hosts --ask-become-pass provision_runner-host.yml
-	cd ${CURRENT_WDIR}
+	@echo "NOT IMPLEMENTED: ..."
 
-upgrade-code :
-	@echo "Upgrading code..."
+upgrade-files :
+	@echo "Upgrading files..."
 	@set -e ;\
 	OLD_VERSION=$$(git describe --tags --abbrev=0) ;\
 	NEW_VERSION=$$(curl --silent "https://api.github.com/repos/djeeirh/data-analysis-platform/releases/latest" $\
@@ -41,8 +32,12 @@ upgrade-code :
 	echo "New version: $$NEW_VERSION"  ;\
 	git fetch --all --tags ;\
 	git checkout tags/$$NEW_VERSION ;\
-	echo "Template diffs of current and latest version..." ;\
-	echo "Please review them carefully and make adjustments to your installation." ;\
+	echo "#######################################################################" ;\
+	echo "#" ;\
+	echo "# Template diffs of current and latest version..." ;\
+	echo "# Please review them carefully and make adjustments to your installation." ;\
+	echo "#" ;\
+	echo "#######################################################################" ;\
 	git diff tags/$$OLD_VERSION -- ${INFRASTRUCTURE_CONFIG_TEMPLATES_DIR} ;\
 	git diff tags/$$OLD_VERSION -- ${INFRASTRUCTURE_SECRETS_TEMPLATES_DIR} ;\
 	git diff tags/$$OLD_VERSION -- ${INFRASTRUCTURE_ANSIBLE_TEMPLATES_DIR} ;\
@@ -57,6 +52,8 @@ clean :
 	find ${INFRASTRUCTURE_CONFIG_DIR}/ -type f ! -name '.gitkeep' -delete
 	@echo "Cleaning ansible files..."
 	find ${INFRASTRUCTURE_ANSIBLE_DIR}/ -type f ! -name '.gitkeep' -delete
+	@echo "Cleaning makefiles..."
+	find ${MAKEFILES_DIR}/ -type f ! -name '.gitkeep' -delete
 	
 
 
