@@ -1,4 +1,4 @@
 
 # Ignore everything in secrets/ except for the .gitkeep file.
-secrets/*
+*/secrets/*
 !secrets/.gitkeep
