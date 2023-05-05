@@ -36,6 +36,8 @@ upgrade-code :
 	$(eval OLD_VERSION := $(git describe --tags --abbrev=0))
 	$(eval NEW_VERSION := $(curl --silent "https://api.github.com/repos/mdernovoi/data-analysis-platform/releases/latest" $\
 	 | jq '.tag_name' | sed 's/"//g') )
+	@echo "Current version: ${OLD_VERSION}"
+	@echo "New version: ${NEW_VERSION}"
 	git fetch --all --tags | git checkout tags/${NEW_VERSION}
 	@echo "Template diffs of current and latest version..."
 	@echo "Please review them carefully and make adjustments to your installation."
