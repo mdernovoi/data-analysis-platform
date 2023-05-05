@@ -39,7 +39,8 @@ upgrade-code :
 	 | jq '.tag_name' | sed 's/"//g') ;\
 	echo "Current version: $$OLD_VERSION" ;\
 	echo "New version: $$NEW_VERSION"  ;\
-	git fetch --all --tags | git checkout tags/$$NEW_VERSION ;\
+	git fetch --all --tags ;\
+	git checkout tags/$$NEW_VERSION ;\
 	echo "Template diffs of current and latest version..." ;\
 	echo "Please review them carefully and make adjustments to your installation." ;\
 	git diff tags/$$OLD_VERSION -- ${INFRASTRUCTURE_CONFIG_TEMPLATES_DIR} ;\
