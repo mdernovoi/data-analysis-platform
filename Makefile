@@ -33,11 +33,12 @@ install-runner :
 
 upgrade-code :
 	@echo "Upgrading code..."
-	$(eval OLD_VERSION := $(git describe --tags))
+	$(eval OLD_VERSION := $(git describe --tags --abbrev=0))
 	$(eval NEW_VERSION := $(curl --silent "https://api.github.com/repos/mdernovoi/data-analysis-platform/releases/latest" $\
 	 | jq '.tag_name' | sed 's/"//g') )
 	git fetch --all --tags | git checkout tags/${NEW_VERSION}
-	@echo "Diffs of current and latest versions..."
+	@echo "Template diffs of current and latest version..."
+	@echo "Please review them carefully and make adjustments to your installation."
 	git diff tags/${OLD_VERSION} -- ${INFRASTRUCTURE_CONFIG_TEMPLATES_DIR}
 	git diff tags/${OLD_VERSION} -- ${INFRASTRUCTURE_SECRETS_TEMPLATES_DIR}
 	git diff tags/${OLD_VERSION} -- ${INFRASTRUCTURE_ANSIBLE_TEMPLATES_DIR}
