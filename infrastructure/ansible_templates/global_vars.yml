@@ -3,15 +3,15 @@
 # User that owns all files of the data analysis platform.
 # NOTE: also has to be changed in the ansible hosts file!!!
 infrastructure_account:
-  user: "dap"
-  group: "dap"
+  user: "{{TODO:REPLACE}}"
+  group: "{{TODO:REPLACE}}"
 
 ### Networking
 # Ip of the service-host (with gitlab, databases, minio, mlflow, etc.)
-service_host_ip: "10.0.2.15"
+service_host_ip: "{{TODO:REPLACE}}"
 
 # Domain name that is used to reference all resources (e.g. gitlab.mydomain.com)
-project_domain_name: "roxam.de"
+project_domain_name: "{{TODO:REPLACE}}"
 
 # If data analysis platform services (e.g., gitlab, mlflow, etc.) can not be
 # resolved via a global DNS service, this setting creates static DNS entries in /etc/hosts
