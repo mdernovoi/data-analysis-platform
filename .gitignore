@@ -10,3 +10,7 @@ infrastructure/config/*
 # Ignore everything in infrastructure/ansible/ except for the .gitkeep file.
 infrastructure/ansible/*
 !infrastructure/ansible/.gitkeep
+
+# Ignore everything in makefiles/ except for the .gitkeep file.
+makefiles/*
+!makefiles/.gitkeep
