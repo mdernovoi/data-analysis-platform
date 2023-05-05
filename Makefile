@@ -2,63 +2,60 @@
 .DEFAULT_GOAL := install_service
 
 INFRASTRUCTURE_DIR := infrastructure
+
 INFRASTRUCTURE_CONFIG_DIR := ${INFRASTRUCTURE_DIR}/config
+INFRASTRUCTURE_CONFIG_TEMPLATES_DIR := ${INFRASTRUCTURE_DIR}/config_templates
+
+INFRASTRUCTURE_SECRETS_DIR := ${INFRASTRUCTURE_DIR}/secrets
+INFRASTRUCTURE_SECRETS_TEMPLATES_DIR := ${INFRASTRUCTURE_DIR}/secrets_templates
+
 INFRASTRUCTURE_ANSIBLE_DIR := ${INFRASTRUCTURE_DIR}/ansible
+INFRASTRUCTURE_ANSIBLE_TEMPLATES_DIR := ${INFRASTRUCTURE_DIR}/ansible_templates
 
-SERVICE_HOST_GITLAB_CONFIG_DIR := ${INFRASTRUCTURE_CONFIG_DIR}/gitlab
-SERVICE_HOST_NGINX_CONFIG_DIR := ${INFRASTRUCTURE_CONFIG_DIR}/nginx-proxy
-SERVICE_HOST_DOCKER_COMPOSE_CONFIG_DIR := ${INFRASTRUCTURE_CONFIG_DIR}/docker-compose
-
-SERVICE_HOST_ANSIBLE_DIR := ${INFRASTRUCTURE_ANSIBLE_DIR}/role_service-host
-SERVICE_HOST_ANSIBLE_TEMPLATES_DIR := ${SERVICE_HOST_ANSIBLE_DIR}/templates
-
-RUNNER_HOST_GITLAB_RUNNER_CONFIG_DIR := ${INFRASTRUCTURE_CONFIG_DIR}/gitlab-runner
-RUNNER_HOST_NGINX_CONFIG_DIR := ${INFRASTRUCTURE_CONFIG_DIR}/nginx-proxy
-RUNNER_HOST_DOCKER_COMPOSE_CONFIG_DIR := ${INFRASTRUCTURE_CONFIG_DIR}/docker-compose
-
-RUNNER_HOST_ANSIBLE_DIR := ${INFRASTRUCTURE_ANSIBLE_DIR}/role_runner-host
-RUNNER_HOST_ANSIBLE_TEMPLATES_DIR := ${RUNNER_HOST_ANSIBLE_DIR}/templates
 
 install-service :
-	@echo "Checking if custom configuration exists..."
-	# TODO do
-	@echo "Checking if all {{TODO:REPLACE}} placeholders have been replaced with actual values..."
-	# TODO do
-	@echo "Copying predefined configuration files to the ansible directory..."
-	cp -r ${SERVICE_HOST_GITLAB_CONFIG_DIR}/*.j2 ${SERVICE_HOST_ANSIBLE_TEMPLATES_DIR}/
-	cp -r ${SERVICE_HOST_NGINX_CONFIG_DIR}/*.j2 ${SERVICE_HOST_ANSIBLE_TEMPLATES_DIR}/
-	cp -r ${SERVICE_HOST_DOCKER_COMPOSE_CONFIG_DIR}/*.j2 ${SERVICE_HOST_ANSIBLE_TEMPLATES_DIR}/
-	cp ${INFRASTRUCTURE_CONFIG_DIR}/global_vars.yml ${INFRASTRUCTURE_ANSIBLE_DIR}/
-	cp ${INFRASTRUCTURE_CONFIG_DIR}/hosts ${INFRASTRUCTURE_ANSIBLE_DIR}/
-	@echo "Running ansible provisioning..."
+	@echo "TODO: Checking if custom configuration exists..."
+	@echo "TODO: Checking if all {{TODO:REPLACE}} placeholders have been replaced with actual values..."
+	@echo "Running ansible..."
 	$(eval CURRENT_WDIR := $(pwd))
 	cd ${INFRASTRUCTURE_ANSIBLE_DIR}
 	#ansible-playbook -i hosts --ask-become-pass provision_service-host.yml
 	cd ${CURRENT_WDIR}
 
 install-runner :
-	@echo "Checking if custom configuration exists..."
-	# TODO do
-	@echo "Checking if all {{TODO:REPLACE}} placeholders have been replaced with actual values..."
-	# TODO do
-	@echo "Copying predefined configuration files to the ansible directory..."
-	cp -r ${RUNNER_HOST_GITLAB_RUNNER_CONFIG_DIR}/*.j2 ${RUNNER_HOST_ANSIBLE_TEMPLATES_DIR}/
-	cp -r ${RUNNER_HOST_NGINX_CONFIG_DIR}/*.j2 ${RUNNER_HOST_ANSIBLE_TEMPLATES_DIR}/
-	cp -r ${RUNNER_HOST_DOCKER_COMPOSE_CONFIG_DIR}/*.j2 ${RUNNER_HOST_ANSIBLE_TEMPLATES_DIR}/
+	@echo "TODO: Checking if custom configuration exists..."
+	@echo "TODO: Checking if all {{TODO:REPLACE}} placeholders have been replaced with actual values..."
+	@echo "Running ansible..."
+	$(eval CURRENT_WDIR := $(pwd))
+	cd ${INFRASTRUCTURE_ANSIBLE_DIR}
+	#ansible-playbook -i hosts --ask-become-pass provision_runner-host.yml
+	cd ${CURRENT_WDIR}
 
-clean-service :
-	@echo "Cleaning ansible templates..."
-	find ${SERVICE_HOST_ANSIBLE_TEMPLATES_DIR}/ -type f ! -name 'README.md' -delete
-	@echo "Cleaning ansible config files..."
-	rm ${INFRASTRUCTURE_ANSIBLE_DIR}/global_vars.yml
-	rm ${INFRASTRUCTURE_ANSIBLE_DIR}/hosts
+upgrade-code :
+	@echo "Upgrading code..."
+	$(eval OLD_VERSION := $(git describe --tags))
+	$(eval NEW_VERSION := $(curl --silent "https://api.github.com/repos/mdernovoi/data-analysis-platform/releases/latest" $\
+	 | jq '.tag_name' | sed 's/"//g') )
+	git fetch --all --tags | git checkout tags/${NEW_VERSION}
+	@echo "Diffs of current and latest versions..."
+	git diff tags/${OLD_VERSION} -- ${INFRASTRUCTURE_CONFIG_TEMPLATES_DIR}
+	git diff tags/${OLD_VERSION} -- ${INFRASTRUCTURE_SECRETS_TEMPLATES_DIR}
+	git diff tags/${OLD_VERSION} -- ${INFRASTRUCTURE_ANSIBLE_TEMPLATES_DIR}
 
-clean-runner :
-	@echo "Cleaning ansible templates..."
-	find ${RUNNER_HOST_ANSIBLE_TEMPLATES_DIR}/ -type f ! -name 'README.md' -delete
+upgrade-services :
+	@echo "NOT IMPLEMENTED: Upgrading services..."
+
+clean :
+	@echo "Cleaning secrets..."
+	find ${INFRASTRUCTURE_SECRETS_DIR}/ -type f ! -name '.gitkeep' -delete
+	@echo "Cleaning config files..."
+	find ${INFRASTRUCTURE_CONFIG_DIR}/ -type f ! -name '.gitkeep' -delete
+	@echo "Cleaning ansible files..."
+	find ${INFRASTRUCTURE_ANSIBLE_DIR}/ -type f ! -name '.gitkeep' -delete
+	
 
 
-# include user-defined makefiles from the custom_makefiles directory that contain `Makefile` in their name
+# include user-defined makefiles that contain `Makefile` in their name
 # NOTE: user-defined makefiles are included at the end and thus can overwrite default targets!
-# Execution example: `make install-service install-my-service` where install-my-service is defined in a custom makefile
-include custom_makefiles/*Makefile*
+# Execution example: `make install-service my-target` where my-target is defined in a custom makefile
+include makefiles/*Makefile*

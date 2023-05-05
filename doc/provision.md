@@ -12,13 +12,21 @@
 
 ### Get the latest release
 
-Download the latest release from `https://github.com/mdernovoi/data-analysis-platform/releases`.
+`https://github.com/mdernovoi/data-analysis-platform`
+`git checkout tags/v1.0.1`
 
 ### Install Prerequisites
 
-#### Make
+#### System tools
 
-Make sure the `make` command is available. If not, install it with `sudo apt-get install build-essential`.
+```Shell
+sudo apt-get install -y build-essential \
+      diff \
+      curl \
+      jq \
+      gitt
+```
+`sudo apt-get install -ybuild-essential`.
 
 #### Ansible
 

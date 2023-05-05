@@ -1,15 +1,12 @@
 
-# Ignore everything in secrets/ except for the .gitkeep file.
+# Ignore all secrets/ except for the .gitkeep file.
 */secrets/*
 !*/secrets/.gitkeep
 
-# Ignore everything in config/ except for the .gitkeep file.
-*/config/*
-!*/config/.gitkeep
+# Ignore everything in infrastructure/config/ except for the .gitkeep file.
+infrastructure/config/*
+!infrastructure/config/.gitkeep
 
-# Ignore everything in ansible role templates/ except for the README file.
-infrastructure/ansible/*/templates/*
-!infrastructure/ansible/*/templates/README.md
-
-# Ignore generated ansible files
-infrastructure/ansible/global_var.yml
+# Ignore everything in infrastructure/ansible/ except for the .gitkeep file.
+infrastructure/ansible/*
+!infrastructure/ansible/.gitkeep
