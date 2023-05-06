@@ -76,7 +76,7 @@ This guide describes a **standard installation** without customization. To learn
     ```Shell
     find-todo-replace-placeholders
     ```
-
+ 
     Values to replace:
 
     - TODO: :construction: **Currently under construction** :construction:
