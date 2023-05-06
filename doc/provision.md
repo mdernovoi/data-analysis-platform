@@ -81,11 +81,11 @@ This guide describes a **standard installation** without customization. To learn
 
     - TODO: :construction: **Currently under construction** :construction:
 
-    > **TIP**: Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). 
+    > :warning: **NOTE**: Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). 
     >
-    > You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708). 
+    > **TIP**: The Data Analysis Platform can also be **deployed without TLS** for testing purposes. In this case **certificates are not required**. This does not impair the functionality of the platform in any way. However, this deployment type is not recommended for production use since all data are transferred unencrypted and can be read or modified by a malicious actor.
     >
-    > The Data Analysis Platform can also be **deployed without TLS** for testing purposes **without certificates**. This does not impair the functionality of the platform in any way. However, this deployment type is not recommended for production use since all data are transferred unencrypted and can be read or modified by a malicious actor.
+    > **TIP**: You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708). 
 
 
 ### Deploy the platform
