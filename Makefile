@@ -15,6 +15,7 @@ INFRASTRUCTURE_ANSIBLE_TEMPLATES_DIR := ${INFRASTRUCTURE_DIR}/ansible_templates
 MAKEFILES_DIR := makefiles
 MAKEFILES_TEMPLATES_DIR := makefiles_templates
 
+LATEST_DATA_ANALYSIS_PLATFORM_RELEASE_GITHUB_API_URL := "https://api.github.com/repos/mdernovoi/data-analysis-platform/releases/latest" 
 
 install-service :
 	@echo "NOT IMPLEMENTED: ..."
@@ -22,11 +23,11 @@ install-service :
 install-runner :
 	@echo "NOT IMPLEMENTED: ..."
 
-upgrade-files :
+upgrade-repository :
 	@echo "Upgrading files..."
 	@set -e ;\
 	OLD_VERSION=$$(git describe --tags --abbrev=0) ;\
-	NEW_VERSION=$$(curl --silent "https://api.github.com/repos/djeeirh/data-analysis-platform/releases/latest" $\
+	NEW_VERSION=$$(curl --silent ${LATEST_DATA_ANALYSIS_PLATFORM_RELEASE_GITHUB_API_URL} $\
 	 | jq '.tag_name' | sed 's/"//g') ;\
 	echo "Current version: $$OLD_VERSION" ;\
 	echo "New version: $$NEW_VERSION"  ;\
@@ -45,7 +46,8 @@ upgrade-files :
 upgrade-services :
 	@echo "NOT IMPLEMENTED: Upgrading services..."
 
-clean :
+clean-repository :
+	@echo "Removing all custom files in this repository..."
 	@echo "Cleaning secrets..."
 	find ${INFRASTRUCTURE_SECRETS_DIR}/ -type f ! -name '.gitkeep' -delete
 	@echo "Cleaning config files..."
@@ -55,7 +57,13 @@ clean :
 	@echo "Cleaning makefiles..."
 	find ${MAKEFILES_DIR}/ -type f ! -name '.gitkeep' -delete
 	
+clean-services :
+	@echo "NOT IMPLEMENTED: Removing files of all services..."
 
+clean :
+	@echo "Removing all custom files of the data analysis platform..."
+	clean-repository
+	clean-services
 
 # include user-defined makefiles that contain `Makefile` in their name
 # NOTE: user-defined makefiles are included at the end and thus can overwrite default targets!
