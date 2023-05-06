@@ -1,8 +1,9 @@
 
-.PHONY: install-system-prerequisites install-ansible-prerequisites install-prerequisites &\
+.PHONY: install-system-prerequisites install-ansible-prerequisites install-prerequisites $\
+	checkout-latest-release $\
     copy-files-for-default-installation find-todo-replace-placeholders prepare-default-installation &\
-	install-service-host install-runner-host &\
-	upgrade-repository upgrade-services &\
+	install-service-host install-runner-host $\
+	upgrade-repository upgrade-services $\
 	clean-repository clean-services clean
 
 INFRASTRUCTURE_DIR := infrastructure
@@ -19,7 +20,7 @@ INFRASTRUCTURE_ANSIBLE_TEMPLATES_DIR := ${INFRASTRUCTURE_DIR}/ansible_templates
 MAKEFILES_DIR := makefiles
 MAKEFILES_TEMPLATES_DIR := makefiles_templates
 
-LATEST_DATA_ANALYSIS_PLATFORM_RELEASE_GITHUB_API_URL := &\
+LATEST_DATA_ANALYSIS_PLATFORM_RELEASE_GITHUB_API_URL := $\
         "https://api.github.com/repos/mdernovoi/data-analysis-platform/releases/latest" 
 
 install-system-prerequisites :
@@ -30,7 +31,8 @@ install-system-prerequisites :
 		curl \
 		git \
 		grep \
-      	jq
+      	jq \
+		sed
 
 install-ansible-prerequisites :
 	@echo "Installing prerequisites..."
@@ -42,6 +44,15 @@ install-ansible-prerequisites :
     source ~/.bashrc
 
 install-prerequisites : install-system-prerequisites install-ansible-prerequisites
+
+checkout-latest-release :
+	@echo "Checking out the latest release..."
+	@set -e ;\
+	LATEST_VERSION=$$(curl --silent ${LATEST_DATA_ANALYSIS_PLATFORM_RELEASE_GITHUB_API_URL} $\
+	 | jq '.tag_name' | sed 's/"//g') ;\
+	echo "Latest release: $$NEWLATEST_VERSION_VERSION"  ;\
+	git fetch --all --tags ;\
+	git checkout tags/$$LATEST_VERSION ;\
 
 copy-files-for-default-installation :
 	@echo "Copying files for a new default installation..."
@@ -69,7 +80,7 @@ find-todo-replace-placeholders :
 	@echo ""
 	-egrep -r --with-filename --line-number --context=6 '{{TODO:REPLACE}}' ${INFRASTRUCTURE_ANSIBLE_DIR}/
 
-prepare-default-installation : install-prerequisites copy-files-for-default-installation &\
+prepare-default-installation : install-prerequisites copy-files-for-default-installation $\
     find-todo-replace-placeholders
 
 install-service-host :
