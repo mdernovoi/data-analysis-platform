@@ -85,7 +85,7 @@ This guide describes a **standard installation** without customization. To learn
     >
     > You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708). 
     >
-    > For testing purposes, the Data Analysis Platform can also be deployed without TLS. This does not impair the functionality of the platform in any way. However, this deployment type is not recommended for production use since all data are transferred unencrypted and can be read or modified by a malicious actor.
+    > The Data Analysis Platform can also be **deployed without TLS** for testing purposes **without certificates**. This does not impair the functionality of the platform in any way. However, this deployment type is not recommended for production use since all data are transferred unencrypted and can be read or modified by a malicious actor.
 
 
 ### Deploy the platform
