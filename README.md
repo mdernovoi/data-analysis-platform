@@ -72,9 +72,6 @@ Please suggest any improvements or express wishes in the Issues section. A pull 
 - [ ] Add a `CONTRIBUTING.md` file describing how to contribute to the project.
 - [ ] Update `SECURITY.md` with concrete contact details.
 - [ ] Add automated tests.
-- [ ] Develop a painless version upgrade system.
-    - Users might change their local installations (configs, scripts, docker compose, etc.). It should be possible to upgrade to a new version of the Data Analysis Platform without losing local changes (an intelligent merge).
-    - Consider upgrades of running production deployments.
 - [ ] Develop a backup solution to safely backup data from all services. A painless rollback to a previous version should be possible.
 
 ### Least important

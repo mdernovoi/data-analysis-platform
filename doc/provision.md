@@ -2,7 +2,7 @@
 
 ## Initial provisioning
 
-> :warning: It is recommended to install the Data Analysis Platform on a dedicated Host (physical or virtual). Several changes to system settings are made during provisioning. Alternatively, you can review the Ansible tasks in `infrastructure/ansible` to verify compatibility with your current setup.
+> :warning: Installing the Data Analysis Platform on a dedicated Host (physical or virtual) is recommended. Several changes to system settings are made during provisioning. Alternatively, you can review the Ansible tasks in `infrastructure/ansible` to verify compatibility with your current setup.
 >
 > A non-exhaustive list of system changes:
 > - Installation of Docker
@@ -10,86 +10,85 @@
 > - Configuration of journald
 > - Static DNS entries in `/etc/hosts`
 
-### Get the latest release
+> :warning: **NOTE**: reference the [architecture description](architecture.md) to understand how the Data Analysis Platform is structured and how it works. **This is required to understand the provisioning process.**
 
-`https://github.com/mdernovoi/data-analysis-platform`
-`git checkout tags/v1.0.1`
+This guide describes a **standard installation** without customization. To learn how to customize your setup, please refer to [the customization guide](customization.md).
 
-### Install Prerequisites
+### Prepare the deployment
 
-#### System tools
+1) Install the `build-essential` package.
 
-```Shell
-sudo apt-get install -y build-essential \
-      diff \
-      curl \
-      jq \
-      gitt
-```
-`sudo apt-get install -ybuild-essential`.
+    ```Shell
+    sudo apt install build-essential
+    ``` 
 
-#### Ansible
+2) Clone the `data-analysis-platform` repository.
 
-Follow the [official guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) or execute the commands below.
+    ```Shell
+    git clone https://github.com/mdernovoi/data-analysis-platform
+    cd data-analysis-platform
+    ```
+3) Install the prerequisites.
 
-> :warning: Execute as a non-root user! Otherwise, paths will be messed up.
+    Install all required prerequisites:
 
-```Shell
-sudo apt-get install -y python3-pip && \
-    python3 -m pip install --user ansible && \
-    # Add Ansible to PATH 
-    echo 'PATH="$PATH:~/.local/bin"' >> ~/.bashrc && \
-    source ~/.bashrc
-```
-### Configure services and secrets
+    ```Shell
+    make install-prerequisites
+    ```
 
-TODO: :construction: **Currently under construction** :construction:
+    **TIP**: To review all prerequisites review the `install-prerequisites` target in the `Makefile`.
 
-#### Config
+    **Alternatively**:
+    
+    - Install only system packages:
+      ```Shell
+      make install-system-prerequisites
+      ``` 
+    - Install only ansible:
 
-The `infrastructure/config_templates` directory contains templates of configuration files the Data Analysis Platform requires.
+      Another way to install Ansible is by following the [official guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html).
 
-1) Copy all config file templates from `infrastructure/config_templates`  to the `infrastructure/config` directory, which Git ignores.
+      ```Shell
+      make install-ansible-prerequisites
+      ```
 
-**NOTE**: The `config` directory is ignored by git and thus does not change during version upgrades. Please keep all your custom configuration files in it. Files in the  `config_templates` directory can be changed during upgrades.
 
-2) Search for `{{TODO:REPLACE}}` in the `infrastructure/config` directory and fill in all missing values. 
+4) Checkout the latest stable version (the latest release).
 
-  **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
+    ```Shell
+    make checkout-latest-release
+    ```
 
-  For configuration documentation please reference the websites of the indicidual services (e.g. [the gitlab.rb reference](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template))
+5) Copy templates to runtime directories.
 
-#### Secrets
+    Please reference the [architecture guide](architecture.md) to understand what happens in this step.
 
-The `infrastructure/secrets_templates` directory contains templates of secrets the Data Analysis Platform requires.
+    ```Shell
+    make copy-files-for-default-installation 
+    ```
 
-> :warning: Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). Further versions will remove this limitation (reference the `Roadmap` section of the main `README.md`).
->
-> **TIP**: You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708).
+6) Replace all configuration placeholders.
 
-1) Copy all secrets templates from `infrastructure/secrets_templates`  to the `infrastructure/secrets` directory, which Git ignores.
+    In this step, all runtime files are searched for the `{{TODO:REPLACE}}` placeholder, and all occurrences are printed to the console.
 
-**NOTE**: The `secrets` directory is ignored by git and thus does not change during version upgrades. Please keep all your custom configuration files in it. Files in the  `secrets_templates` directory can be changed during upgrades.
+    Carefully review the command output and replace all placeholder occurrences with reasonable values. Some values are described below.
 
-2) Search for `{{TODO:REPLACE}}` in the `infrastructure` directory and fill in all missing values. 
+    ```Shell
+    find-todo-replace-placeholders
+    ```
 
-  **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
+    Values to replace:
 
-TODO :construction: **Currently under construction** :construction:
+    - TODO: :construction: **Currently under construction** :construction:
 
-#### Src
+    > :warning: **NOTE**: Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). 
+    >
+    > **TIP**: The Data Analysis Platform can also be **deployed without TLS** for testing purposes. In this case **certificates are not required**. This does not impair the functionality of the platform in any way. However, this deployment type is not recommended for production use since all data are transferred unencrypted and can be read or modified by a malicious actor.
+    >
+    > **TIP**: You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708). 
 
-**NOTE**: Steps in this section are not strictly necessary to be able to use the Data Analysis Platform. However, the `src` directory contains very useful code for actual data analysis projects (Docker environments, examples of GitLab Pipelines, etc.).
 
-1) Copy all secrets templates from `secrets_templates` to the corresponding `secrets` directory, which Git ignores. 
-
-2) Search for `{{TODO:REPLACE}}` in the `src` directory and fill in all missing values. 
-
-  **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
-
-TODO :construction: **Currently under construction** :construction:
-
-### Deploy services
+### Deploy the platform
 
 > **NOTE**: Both the *Service* and *Runner* services can be deployed on the same host.
 
