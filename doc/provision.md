@@ -20,13 +20,14 @@
 #### System tools
 
 ```Shell
-sudo apt-get install -y build-essential \
-      diff \
-      curl \
-      jq \
-      git
+sudo apt-get install -y \
+		build-essential \
+		curl \
+    git \
+		grep \
+    jq
 ```
-`sudo apt-get install -ybuild-essential`.
+
 
 #### Ansible
 
@@ -35,10 +36,10 @@ Follow the [official guide](https://docs.ansible.com/ansible/latest/installation
 > :warning: Execute as a non-root user! Otherwise, paths will be messed up.
 
 ```Shell
-sudo apt-get install -y python3-pip && \
-    python3 -m pip install --user ansible && \
+sudo apt-get install -y python3 python3-pip ;\
+    python3 -m pip install --user ansible ;\
     # Add Ansible to PATH 
-    echo 'PATH="$PATH:~/.local/bin"' >> ~/.bashrc && \
+    echo 'PATH="$PATH:~/.local/bin"' >> ~/.bashrc ;\
     source ~/.bashrc
 ```
 ### Configure services and secrets
@@ -72,18 +73,6 @@ The `infrastructure/secrets_templates` directory contains templates of secrets t
 **NOTE**: The `secrets` directory is ignored by git and thus does not change during version upgrades. Please keep all your custom configuration files in it. Files in the  `secrets_templates` directory can be changed during upgrades.
 
 2) Search for `{{TODO:REPLACE}}` in the `infrastructure` directory and fill in all missing values. 
-
-  **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
-
-TODO :construction: **Currently under construction** :construction:
-
-#### Src
-
-**NOTE**: Steps in this section are not strictly necessary to be able to use the Data Analysis Platform. However, the `src` directory contains very useful code for actual data analysis projects (Docker environments, examples of GitLab Pipelines, etc.).
-
-1) Copy all secrets templates from `secrets_templates` to the corresponding `secrets` directory, which Git ignores. 
-
-2) Search for `{{TODO:REPLACE}}` in the `src` directory and fill in all missing values. 
 
   **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
 
