@@ -1,0 +1,45 @@
+
+### Users
+# User that owns all files of the data analysis platform.
+# NOTE: also has to be changed in the ansible hosts file!!!
+infrastructure_account:
+  user: "{{TODO:REPLACE}}"
+  group: "{{TODO:REPLACE}}"
+
+### Networking
+# Ip of the service-host (with gitlab, databases, minio, mlflow, etc.)
+service_host_ip: "{{TODO:REPLACE}}"
+
+# Domain name that is used to reference all resources (e.g. gitlab.mydomain.com)
+project_domain_name: "{{TODO:REPLACE}}"
+
+# If data analysis platform services (e.g., gitlab, mlflow, etc.) can not be
+# resolved via a global DNS service, this setting creates static DNS entries in /etc/hosts
+# and also propagates them to docker containers, if required.
+# 
+# Especially useful for local deployments.
+use_static_dns: true
+
+# Whether TLS should be used.
+# NOTE: if set to  `true` publicly signed certificates are required.
+use_tls: false
+
+### Paths
+path_base: "/var/opt/data_analysis_platform"
+paths:
+  provision: "{{ path_base }}/provision"  
+  data: "{{ path_base }}/data"
+  secrets: "{{ path_base }}/secrets"
+  venv: "{{ path_base }}/venv"
+
+### Docker config
+# Doder daemon config
+docker_daemon_config:
+  daemon_json_config_file:
+    log-driver: "journald"
+  
+# Journald config for docker
+journlad_config:
+  SystemMaxUse: "10G"
+  SystemKeepFree: "50G"
+

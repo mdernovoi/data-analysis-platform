@@ -6,7 +6,7 @@ Only versions listed below are currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| latest  | :heavy_check_mark: |
+| latest release  | :heavy_check_mark: |
 
 
 ## Reporting a Security Improvement

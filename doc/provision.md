@@ -114,14 +114,14 @@ docker compose \
   up
 ```
 
-4) (If applicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
+4) (If applicable) Open the Portainer UI in the browser at `http(s)://portainer-service.(mydomain.com)` and:
 
   - Set the initial root account password.
   - Save this password somewhere (e.g., in `infrastructure/secrets/portainer_credentials.txt`).
 
 > :warning: If you are too slow, you might encounter a timeout, and Portainer will refuse to set the initial password, prompting a login. If this happens, delete all files under `{{ path_base }}` from the `infrastructure/ansible/global_vars.yml` file and restart with step 1.
 
-5) Open the Minio UI in the browser at `https://minio.mydomain.com` and:
+5) Open the Minio UI in the browser at `http(s)://minio.(mydomain.com)` and:
 
   - Log in with the credintial from `infrastructure/secrets/minio_MINIO_SECRETS.env`.
   - Create a new user with a `readwrite` policy for MLflow.
@@ -170,7 +170,7 @@ docker compose \
 
 #### Runner host
 
-> :warning: Due to port binding conflicts the reverse proxy for runner services listens on port `4431` insted of the usual `443`. This is configured in `infrastructure/ansible/role_runner-host/templates/runner-compose.yaml.j2`.
+> :warning: Due to port binding conflicts the reverse proxy for runner services listens on port `4431` (or `8080` without TLS) insted of the usual `443` (`80`). This is configured in `infrastructure/ansible/role_runner-host/templates/runner-compose.yaml.j2`.
 
 1) Provision the service host first.
 
@@ -194,7 +194,7 @@ docker compose \
 
 **TIP**: Add the `--detach` option to the command above to start the containers in the background.
 
-4) (If applicable) Open the Portainer UI in the browser at `https://portainer-runner.mydomain.com:4431` and:
+4) (If applicable) Open the Portainer UI in the browser at `http(s)://portainer-runner.(mydomain.com):(4431)` and:
 
   - Set the initial root account password.
   - Save this password somewhere (e.g., in `infrastructure/secrets/portainer_credentials.txt`).
@@ -206,7 +206,7 @@ docker compose \
   - Open the GitLab UI under `https://gitlab.mydomain.com` --> Admin --> CI/CD  --> Runners --> Register an instance runner and copy the `Registration token`.
   - Replace the `{{ ... }}` placeholders in the command below with values from `infrastructure/ansible/global_vars.yml`.
   - Set the `--registration-token` value in the command below.
-  - Execute:
+  - Execute in a new shell:
 
     ```Shell
     docker run \

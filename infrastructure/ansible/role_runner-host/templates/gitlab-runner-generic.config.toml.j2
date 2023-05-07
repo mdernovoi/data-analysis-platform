@@ -1,0 +1,48 @@
+
+concurrent = 100
+
+[[runners]]
+  url = "{{ use_tls | ansible.builtin.ternary('https', 'http') }}://gitlab.{{ project_domain_name }}"
+  token = ""
+  executor = "docker"
+  shell = "bash"
+
+  builds_dir = "/build"
+  cache_dir = "/cache"
+
+  environment = ["LC_ALL=en_US.UTF-8"]
+  # approx. 1 GB (in kB)
+  output_limit = 1000000
+
+
+  [runners.docker]
+    # ref: https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runners-section
+
+    cpus = ""
+    #cpu_shares = 
+
+    memory = ""
+    memory_swap = ""
+    memory_reservation = ""
+    oom_kill_disable = false
+
+    #devices = 
+    #gpus = "all"
+
+    image = "ubuntu:22.04"
+    
+    {% if use_static_dns %}
+    ### Configure static dns entries for runner containers
+    ### to be able to reach the gitlab instance if no global dns is available
+    
+    # extra_hosts example: ["gitlab.mydomian.com:192.168.0.1", "..."]
+    extra_hosts = [{% for host in extra_hosts %} "{{ host.name }}:{{ host.ip }}",{% endfor %}]
+    {% endif %}
+     
+
+    privileged = false
+    tls_verify = false
+
+   
+    
+    

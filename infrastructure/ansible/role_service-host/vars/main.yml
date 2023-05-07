@@ -1,0 +1,191 @@
+---
+# vars file for role_service-host
+
+### Paths
+role_paths:
+  scripts:
+    - "role_service-host/scripts"
+
+### Static dns entries if no global dns is available.
+extra_hosts:
+  - name: "{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "pgadmin.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "postgres-service.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "postgres-data.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "mlflow.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "minio.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "minio-console.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "gitlab.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "gitlab-registry.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+  - name: "portainer-service.{{ project_domain_name }}"
+    ip: "{{ service_host_ip }}"
+
+### Data directories to be created
+host_prefix: "service"
+data:
+## nginx-proxy
+# Configuration file is generated from a template in the `project_source_dir/infrastructure/ansible/role_service-host` role.
+- path: "{{ paths.data }}/{{ host_prefix }}_nginx-proxy"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## pgadmin
+- path: "{{ paths.data }}/{{ host_prefix }}_pgadmin/var.lib.pgadmin"
+  type: "directory"
+  # pgadmin requirement
+  owner: "5050"
+  group: "5050"
+
+## postgres-service
+- path: "{{ paths.data }}/{{ host_prefix }}_postgres-service/docker-entrypoint-initdb.d"
+  source: "../config/postgres-service/docker-entrypoint-initdb.d/"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.data }}/{{ host_prefix }}_postgres-service/var.lib.postgresql.data"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## postgres-data
+- path: "{{ paths.data }}/{{ host_prefix }}_postgres-data/docker-entrypoint-initdb.d"
+  source: "../config/postgres-data/docker-entrypoint-initdb.d/"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.data }}/{{ host_prefix }}_postgres-data/var.lib.postgresql.data"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## minio
+- path: "{{ paths.data }}/{{ host_prefix }}_minio/data"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## gitlab
+# Configuration file is generated from a template in the `project_source_dir/infrastructure/ansible/role_service-host` role.
+- path: "{{ paths.data }}/{{ host_prefix }}_gitlab/etc.gitlab"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.data }}/{{ host_prefix }}_gitlab/var.log.gitlab"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.data }}/{{ host_prefix }}_gitlab/var.opt.gitlab"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## portainer
+- path: "{{ paths.data }}/{{ host_prefix }}_portainer/data"
+  type: "directory"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+### Secrets to be copied
+secrets:
+## pgadmin
+- path: "{{ paths.secrets }}/pgadmin_PGADMIN_DEFAULT_PASSWORD.env"
+  source: "../secrets/pgadmin_PGADMIN_DEFAULT_PASSWORD.env"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## tls
+- path: "{{ paths.secrets }}/fullchain.pem"
+  source: "../secrets/fullchain.pem"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.secrets }}/privkey.pem"
+  source: "../secrets/privkey.pem"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.secrets }}/dhparam.pem"
+  source: "../secrets/dhparam.pem"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## postgres 
+  # postgres has very strange permissions
+  # these files have to be owned by 999:999 (postgres user)
+  # otherwise postgres can not read them
+  # ref: https://github.com/docker-library/postgres/blob/cf9b6cdd64f8a81b1abf9e487886f47e4971abe2/11/Dockerfile#L16
+  #
+  # tls
+- path: "{{ paths.secrets }}/postgres_fullchain.pem"
+  source: "../secrets/fullchain.pem"
+  type: "file"
+  owner: "999"
+  group: "999"
+- path: "{{ paths.secrets }}/postgres_privkey.pem"
+  source: "../secrets/privkey.pem"
+  type: "file"
+  owner: "999"
+  group: "999"
+- path: "{{ paths.secrets }}/postgres_dhparam.pem"
+  source: "../secrets/dhparam.pem"
+  type: "file"
+  owner: "999"
+  group: "999"
+  #
+  # credentials
+- path: "{{ paths.secrets }}/postgres-service_POSTGRES_PASSWORD.env"
+  source: "../secrets/postgres-service_POSTGRES_PASSWORD.env"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.secrets }}/postgres-data_POSTGRES_PASSWORD.env"
+  source: "../secrets/postgres-data_POSTGRES_PASSWORD.env"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## minio
+- path: "{{ paths.secrets }}/minio_MINIO_SECRETS.env"
+  source: "../secrets/minio_MINIO_SECRETS.env"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## mlflow
+- path: "{{ paths.secrets }}/mlflow_MINIO_KEYS.env"
+  source: "../secrets/mlflow_MINIO_KEYS.env"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.secrets }}/mlflow_MLFLOW_DATABASE_PASSWORD.env"
+  source: "../secrets/mlflow_MLFLOW_DATABASE_PASSWORD.env"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+- path: "{{ paths.secrets }}/mlflow_CONNECTION_SECRETS.env"
+  source: "../secrets/mlflow_CONNECTION_SECRETS.env"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+## gitlab
+- path: "{{ paths.secrets }}/gitlab_initial_root_password.txt"
+  source: "../secrets/gitlab_initial_root_password.txt"
+  type: "file"
+  owner: "{{ infrastructure_account.user }}"
+  group: "{{ infrastructure_account.group }}"
+
+
+
