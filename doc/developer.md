@@ -92,6 +92,21 @@ Execute `Notify.test_email('destination_email@address.com', 'Message Subject', '
 - [complex ci rules](https://docs.gitlab.com/ee/ci/jobs/job_control.html#complex-rules)
 - [.gitlab-ci.yml reference](https://docs.gitlab.com/ee/ci/yaml/)
 
+## Git
+
+List remote branches:
+
+```Shell
+git branch -r
+```
+
+Checkout a remote branch as a local branch:
+
+```Shell
+git checkout -b local_branch_name origin/remote_branch_name
+```
+
+
 ## Misc
 
 - 
