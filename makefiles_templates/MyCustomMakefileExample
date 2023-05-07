@@ -1,4 +1,0 @@
-
-
-my-target :
-	@echo "Installing my custom service..."

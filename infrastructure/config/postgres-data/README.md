@@ -1,0 +1,1 @@
+The configuration files are generated from a template in the `project_source_dir/infrastructure/ansible/role_service-host` role. The template is located in the `templates` subeidrectory of the role.

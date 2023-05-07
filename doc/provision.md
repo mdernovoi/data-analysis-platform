@@ -2,9 +2,10 @@
 
 ## Initial provisioning
 
-> :warning: Installing the Data Analysis Platform on a dedicated Host (physical or virtual) is recommended. Several changes to system settings are made during provisioning. Alternatively, you can review the Ansible tasks in `infrastructure/ansible` to verify compatibility with your current setup.
+> :warning: Installing the Data Analysis Platform on a dedicated Host (physical or virtual) is recommended. Several changes to system settings are made during provisioning. Alternatively, you can review the `Makefile` and Ansible tasks in `infrastructure/ansible` to verify compatibility with your current setup.
 >
 > A non-exhaustive list of system changes:
+> - Installation of Ansible
 > - Installation of Docker
 > - Configuration of Docker logging (journald)
 > - Configuration of journald
@@ -12,7 +13,7 @@
 
 > :warning: **NOTE**: reference the [architecture description](architecture.md) to understand how the Data Analysis Platform is structured and how it works. **This is required to understand the provisioning process.**
 
-This guide describes a **standard installation** without customization. To learn how to customize your setup, please refer to [the customization guide](customization.md).
+This guide describes a **standard installation** on a **local host (no remote ansible)**. To learn how to customize your setup, please refer to [the customization guide](customization.md).
 
 ### Prepare the deployment
 
@@ -22,21 +23,22 @@ This guide describes a **standard installation** without customization. To learn
     sudo apt install build-essential
     ``` 
 
-2) Clone the `data-analysis-platform` repository.
+2) Clone the `custom-data-analysis-platform-template` repository.
 
     ```Shell
-    git clone https://github.com/mdernovoi/data-analysis-platform
-    cd data-analysis-platform
+    git clone --recursive https://github.com/mdernovoi/custom-data-analysis-platform-template.git
+
+    cd custom-data-analysis-platform-template
     ```
 3) Install the prerequisites.
 
     Install all required prerequisites:
 
     ```Shell
-    make install-prerequisites
+    make install-all-prerequisites
     ```
 
-    **TIP**: To review all prerequisites review the `install-prerequisites` target in the `Makefile`.
+    **TIP**: To review all prerequisites review the `install-all-prerequisites` target in the `Makefile`.
 
     **Alternatively**:
     
@@ -53,18 +55,18 @@ This guide describes a **standard installation** without customization. To learn
       ```
 
 
-4) Checkout the latest stable version (the latest release).
+4) Checkout the latest stable version of the data-analysis-platform repository (the latest release).
 
     ```Shell
-    make checkout-latest-release
+    make checkout-latest-data-analysis-platform-src-release
     ```
 
-5) Copy templates to runtime directories.
+5) Copy src templates to runtime directories.
 
-    Please reference the [architecture guide](architecture.md) to understand what happens in this step.
+    Please reference the [architecture guide](architecture.md) and the [the customization guide](customization.md) to understand what happens in this step.
 
     ```Shell
-    make copy-files-for-default-installation 
+    make copy-files-for-default-installation-from-src-to-runtime
     ```
 
 6) Replace all configuration placeholders.
@@ -74,23 +76,19 @@ This guide describes a **standard installation** without customization. To learn
     Carefully review the command output and replace all placeholder occurrences with reasonable values. Some values are described below.
 
     ```Shell
-    find-todo-replace-placeholders
+    make find-todo-replace-placeholders-in-runtime-files
     ```
-
-    Values to replace:
+ 
+    Description of some values that have to be replaced (**non-exhaustive**):
 
     - TODO: :construction: **Currently under construction** :construction:
 
-    > :warning: **NOTE**: Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). 
-    >
-    > **TIP**: The Data Analysis Platform can also be **deployed without TLS** for testing purposes. In this case **certificates are not required**. This does not impair the functionality of the platform in any way. However, this deployment type is not recommended for production use since all data are transferred unencrypted and can be read or modified by a malicious actor.
-    >
-    > **TIP**: You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708). 
+    > :warning: **NOTE**: The default installation of the Data Analysis Platform is not secured by TLS. To learn how to enable TLS reference the [tls section](#tls) of this document.
 
-
+    
 ### Deploy the platform
 
-> **NOTE**: Both the *Service* and *Runner* services can be deployed on the same host.
+> **NOTE**: Both the *Service* and *Runner* subsystems can be deployed on the same host. However, an installation on different machines is recommended to preserve the `service-host` services in case the `runner-host` crashes due to computation errors of the GitLab runner.
 
 #### Service host
 
@@ -114,14 +112,14 @@ docker compose \
   up
 ```
 
-4) (If applicable) Open the Portainer UI in the browser at `https://portainer-service.mydomain.com` and:
+4) (If applicable) Open the Portainer UI in the browser at `http(s)://portainer-service.(mydomain.com)` and:
 
   - Set the initial root account password.
   - Save this password somewhere (e.g., in `infrastructure/secrets/portainer_credentials.txt`).
 
 > :warning: If you are too slow, you might encounter a timeout, and Portainer will refuse to set the initial password, prompting a login. If this happens, delete all files under `{{ path_base }}` from the `infrastructure/ansible/global_vars.yml` file and restart with step 1.
 
-5) Open the Minio UI in the browser at `https://minio.mydomain.com` and:
+5) Open the Minio UI in the browser at `http(s)://minio.(mydomain.com)` and:
 
   - Log in with the credintial from `infrastructure/secrets/minio_MINIO_SECRETS.env`.
   - Create a new user with a `readwrite` policy for MLflow.
@@ -170,7 +168,7 @@ docker compose \
 
 #### Runner host
 
-> :warning: Due to port binding conflicts the reverse proxy for runner services listens on port `4431` insted of the usual `443`. This is configured in `infrastructure/ansible/role_runner-host/templates/runner-compose.yaml.j2`.
+> :warning: Due to port binding conflicts the reverse proxy for runner services listens on port `4431` (or `8080` without TLS) insted of the usual `443` (`80`). This is configured in `infrastructure/ansible/role_runner-host/templates/runner-compose.yaml.j2`.
 
 1) Provision the service host first.
 
@@ -194,7 +192,7 @@ docker compose \
 
 **TIP**: Add the `--detach` option to the command above to start the containers in the background.
 
-4) (If applicable) Open the Portainer UI in the browser at `https://portainer-runner.mydomain.com:4431` and:
+4) (If applicable) Open the Portainer UI in the browser at `http(s)://portainer-runner.(mydomain.com):(4431)` and:
 
   - Set the initial root account password.
   - Save this password somewhere (e.g., in `infrastructure/secrets/portainer_credentials.txt`).
@@ -206,7 +204,7 @@ docker compose \
   - Open the GitLab UI under `https://gitlab.mydomain.com` --> Admin --> CI/CD  --> Runners --> Register an instance runner and copy the `Registration token`.
   - Replace the `{{ ... }}` placeholders in the command below with values from `infrastructure/ansible/global_vars.yml`.
   - Set the `--registration-token` value in the command below.
-  - Execute:
+  - Execute in a new shell:
 
     ```Shell
     docker run \
@@ -234,4 +232,17 @@ docker compose \
   - `portainer-runner.{{ project_domain_name }}`
 
   Check out the [HowTo section](index.md) for further steps.
+
+
+## TLS
+
+TODO: :construction: **Currently under construction** :construction:
+
+Currently, only publicly signed certificates are supported (e.g., signed by LetsEncrypt). However, the **default installation is configured not to use TLS**; thus, no certificates are required. Integrating self-signed certificates to all components is challenging and currently not planned.
+
+**TIP**: You can get a public TLS certificate by registering a domain for approximately 1$ per month (e.g., with [Hetzner](https://www.hetzner.com/domainregistration)) and then [request a free LetsEncrypt certificate with the DNS challenge](https://ongkhaiwei.medium.com/generate-lets-encrypt-certificate-with-dns-challenge-and-namecheap-e5999a040708). 
+
+To enable TLS set the `use_tls` value in `infrastructure/ansible/global_vars.yml` to `true` and replace placeholders in `fullchain.pem`, `privkey.pem` and `dhparam.pem` in the `infrastructure/secrets` directory. Then reconfigure the platform (run `ansible-playbook ... `) and restart all docker services.
+
+
 
