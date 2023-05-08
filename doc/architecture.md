@@ -24,3 +24,5 @@
 ![ee](res/architecture_overview_wrapper.svg)
 
 ![dd](res/architecture_overview.pdf)
+
+[ddd](https://mdernovoi.github.io/data-analysis-platform/doc/res/architecture_overview.pdf)
