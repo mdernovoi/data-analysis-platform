@@ -35,7 +35,7 @@ install-system-prerequisites :
 		curl \
 		git \
 		grep \
-      	jq \
+		jq \
 		sed
 
 install-ansible-prerequisites :
@@ -43,9 +43,6 @@ install-ansible-prerequisites :
 	@echo "Ansible"
 	sudo apt-get install -y python3 python3-pip ;\
     python3 -m pip install --user ansible ;\
-    # Add Ansible to PATH 
-    echo 'PATH="$$PATH:~/.local/bin"' >> ~/.bashrc ;\
-    source ~/.bashrc
 
 install-all-prerequisites : install-system-prerequisites install-ansible-prerequisites
 

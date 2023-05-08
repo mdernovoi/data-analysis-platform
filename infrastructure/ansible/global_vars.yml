@@ -10,7 +10,7 @@ infrastructure_account:
 # Ip of the service-host (with gitlab, databases, minio, mlflow, etc.)
 service_host_ip: "{{TODO:REPLACE}}"
 
-# Domain name that is used to reference all resources (e.g. gitlab.mydomain.com)
+# Domain name that is used to reference all resources (e.g. "mydomain.com")
 project_domain_name: "{{TODO:REPLACE}}"
 
 # If data analysis platform services (e.g., gitlab, mlflow, etc.) can not be
@@ -22,6 +22,7 @@ use_static_dns: true
 
 # Whether TLS should be used.
 # NOTE: if set to  `true` publicly signed certificates are required.
+# Possible values: `true`, `false`
 use_tls: false
 
 ### Paths
