@@ -19,4 +19,6 @@
 
 
 
-[!ddd](/doc/architecture_overview_wrapper.svg)
+[!ddd](/res/architecture_overview_wrapper.svg)
+
+[!ee](res/architecture_overview_wrapper.svg)
