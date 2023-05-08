@@ -15,3 +15,8 @@
     - `infrastructure/ansible`
 
       - `global_vars.yml`: global ansible configuration variables.
+
+
+
+
+[!ddd](/doc/architecture_overview_wrapper.svg)

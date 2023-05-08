@@ -126,7 +126,7 @@ http {
             # otherwise nginx won't start untill all endpoints are available
             # ref: https://stackoverflow.com/a/54719226
             resolver                           127.0.0.11 valid=30s;
-            set $upstream_pgadmin              pgadmin;
+            set $upstream_pgadmin              pgadmin.{{ project_domain_name }};
 
             proxy_pass                         http://$upstream_pgadmin:80;
             proxy_http_version                 1.1;
@@ -215,7 +215,7 @@ http {
             # otherwise nginx won't start untill all endpoint are available
             # ref: https://stackoverflow.com/a/54719226
             resolver                           127.0.0.11 valid=30s;
-            set $upstream_mlflow               mlflow;
+            set $upstream_mlflow               mlflow.{{ project_domain_name }};
 
             proxy_pass                         http://$upstream_mlflow:5000;
             proxy_http_version                 1.1;
@@ -315,7 +315,7 @@ http {
             # otherwise nginx won't start untill all endpoint are available
             # ref: https://stackoverflow.com/a/54719226
             resolver                           127.0.0.11 valid=30s;
-            set $upstream_minio                minio;
+            set $upstream_minio                minio.{{ project_domain_name }};
 
             proxy_pass                         http://$upstream_minio:9000;
             proxy_http_version                 1.1;
@@ -415,7 +415,7 @@ http {
             # otherwise nginx won't start untill all endpoint are available
             # ref: https://stackoverflow.com/a/54719226
             resolver                           127.0.0.11 valid=30s;
-            set $upstream_minio_console        minio;
+            set $upstream_minio_console        minio-console.{{ project_domain_name }};
 
             proxy_pass                         http://$upstream_minio_console:9090;
             proxy_http_version                 1.1;
@@ -516,7 +516,7 @@ http {
             # otherwise nginx won't start untill all endpoint are available
             # ref: https://stackoverflow.com/a/54719226
             resolver                           127.0.0.11 valid=30s;
-            set $upstream_gitlab_web           gitlab;
+            set $upstream_gitlab_web           gitlab.{{ project_domain_name }};
 
             proxy_pass                         http://$upstream_gitlab_web:80;
             proxy_http_version                 1.1;
@@ -606,7 +606,7 @@ http {
             # otherwise nginx won't start untill all endpoint are available
             # ref: https://stackoverflow.com/a/54719226
             resolver                           127.0.0.11 valid=30s;
-            set $upstream_portainer            portainer;
+            set $upstream_portainer            portainer-service.{{ project_domain_name }};
 
             proxy_pass                         http://$upstream_portainer:9000;
             proxy_http_version                 1.1;
@@ -698,7 +698,7 @@ stream {
         # otherwise nginx won't start untill all endpoint are available
         # ref: https://stackoverflow.com/a/54719226
         resolver                           127.0.0.11 valid=30s;
-        set $upstream_postgres_service     postgres-service;
+        set $upstream_postgres_service     postgres-service.{{ project_domain_name }};
 
         proxy_pass                         $upstream_postgres_service:5432;
 
@@ -723,7 +723,7 @@ stream {
         # otherwise nginx won't start untill all endpoint are available
         # ref: https://stackoverflow.com/a/54719226
         resolver                           127.0.0.11 valid=30s;
-        set $upstream_postgres_data        postgres-data;
+        set $upstream_postgres_data        postgres-data.{{ project_domain_name }};
 
         proxy_pass                         $upstream_postgres_data:5432;
 
@@ -748,7 +748,7 @@ stream {
         # otherwise nginx won't start untill all endpoint are available
         # ref: https://stackoverflow.com/a/54719226
         resolver                           127.0.0.11 valid=30s;
-        set $upstream_gitlab_ssh           gitlab;
+        set $upstream_gitlab_ssh           gitlab.{{ project_domain_name }};
 
         # gitlab uses the default sshd daemon on port 22
         proxy_pass                         $upstream_gitlab_ssh:22;
