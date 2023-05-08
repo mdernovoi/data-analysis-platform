@@ -26,3 +26,5 @@
 ![dd](res/architecture_overview.pdf)
 
 [ddd](https://mdernovoi.github.io/data-analysis-platform/doc/res/architecture_overview.pdf)
+
+![ddds](https://github.com/mdernovoi/data-analysis-platform-static-data/blob/main/docs/res/architecture_overview.png)
