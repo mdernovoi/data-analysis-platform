@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-05-08T23:06:09.858Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0" etag="YRfbHjZQ2rzFcjTSKL5C" version="21.1.8" type="device">
+<mxfile host="app.diagrams.net" modified="2023-05-09T00:11:44.218Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0" etag="xnmI_wyB9oGuHz67MBn1" version="21.1.8" type="device">
   <diagram name="Page-1" id="2YF4GnCdR7P2hsEeMEEk">
-    <mxGraphModel dx="3457" dy="1495" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2045" dy="685" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -505,7 +505,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="V2b90kkNqWV_B73Vr2Vg-237" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=3;" vertex="1" parent="1">
-          <mxGeometry x="430" y="3510" width="870" height="210" as="geometry" />
+          <mxGeometry x="430" y="3510" width="870" height="280" as="geometry" />
         </mxCell>
         <mxCell id="V2b90kkNqWV_B73Vr2Vg-238" value="legend" style="text;html=1;strokeColor=default;fillColor=default;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="802" y="3500" width="120" height="20" as="geometry" />
@@ -533,6 +533,12 @@
         </mxCell>
         <mxCell id="V2b90kkNqWV_B73Vr2Vg-254" value="a file system directory" style="text;html=1;strokeColor=default;fillColor=default;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1030" y="3640" width="227.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="V2b90kkNqWV_B73Vr2Vg-257" value="&lt;div align=&quot;center&quot;&gt;(0..n) / (1..n)&lt;/div&gt;" style="text;html=1;strokeColor=default;fillColor=default;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="470" y="3700" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="V2b90kkNqWV_B73Vr2Vg-258" value="quantity: &lt;br&gt;0 or n / 1 or n" style="text;html=1;strokeColor=default;fillColor=default;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="590" y="3700" width="227.5" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
