@@ -9,18 +9,27 @@ repo_name: 'mdernovoi/data-analysis-platform'
 docs_dir: docs
 
 theme: readthedocs
+lang: en
 
+markdown_extensions:
+  toc:
+    permalink: True
+
+plugins:
+  search:
+    indexing: 'full'
 
 #plugins:
 #  - search  # To have search functionality on the document
 #  - mkdocstrings  # To generate documentation from the code docstrings
 
 nav:
-    - Home: index.md
-    - Architecture and Concepts: architecture.md
+  - Home: index.md
+  - Architecture and Concepts: architecture.md
+  - Getting Started:
     - Installation: provision.md
-        - TLS security: tls.md
-        - Customization: customization.md
-        - Upgrade: upgrade.md
-    - Development environments: environments.md
-    - Dev notes: developer.md
+    - TLS Security: tls.md
+    - Customization: customization.md
+    - Version Upgrade: upgrade.md
+  - Development environments: environments.md
+  - Dev notes: developer.md
