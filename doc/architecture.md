@@ -1,6 +1,7 @@
 
 :construction: **Currently under construction** :construction:
 
+![architecture overview](https://github.com/mdernovoi/data-analysis-platform-static-content/blob/main/res/architecture_overview.png)
 
 - `infrastructure/secrets`
 
@@ -17,14 +18,3 @@
       - `global_vars.yml`: global ansible configuration variables.
 
 
-
-
-
-
-![ee](res/architecture_overview_wrapper.svg)
-
-![dd](res/architecture_overview.pdf)
-
-[ddd](https://mdernovoi.github.io/data-analysis-platform/doc/res/architecture_overview.pdf)
-
-![ddds](https://github.com/mdernovoi/data-analysis-platform-static-data/blob/main/docs/res/architecture_overview.png)
