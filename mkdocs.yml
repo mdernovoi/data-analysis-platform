@@ -16,11 +16,11 @@ theme: readthedocs
 #  - mkdocstrings  # To generate documentation from the code docstrings
 
 nav:
-  - Home: index.md
-  - Architecture and Concepts: architecture.md
-  - Installation: provision.md
-    - TLS security: tls.md
-    - Customization: customization.md
-    - Upgrade: upgrade.md
-  - Development environments: environments.md
-  - Dev notes: developer.md
+    - Home: index.md
+    - Architecture and Concepts: architecture.md
+    - Installation: provision.md
+        - TLS security: tls.md
+        - Customization: customization.md
+        - Upgrade: upgrade.md
+    - Development environments: environments.md
+    - Dev notes: developer.md
