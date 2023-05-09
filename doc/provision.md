@@ -100,7 +100,7 @@ This guide describes a **standard installation** on a **local machine (no remote
     
 ## Deploy the platform
 
-> **NOTE**: Both the *Service* and *Runner* subsystems can be deployed on the same host. However, an installation on different machines is recommended to preserve the functionality of `service-host` services in case the `runner-host` crashes due to computation errors (e.g., out-of-memory error).
+> **NOTE**: Both the `service-host` and `runner-host` subsystems can be deployed on the same host. However, an installation on different machines is recommended to preserve the functionality of `service-host` services in case the `runner-host` crashes due to computation errors (e.g., out-of-memory error).
 
 ### Service host
 

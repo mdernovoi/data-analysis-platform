@@ -11,6 +11,10 @@ infrastructure_account:
 service_host_ip: "{{TODO:REPLACE}}"
 
 # Domain name that is used to reference all resources (e.g. "mydomain.com")
+# A proper value is MANDATORY!!!
+# If you do not have a specific domain in mind, just use "mydomain.com".
+# Static DNS entries will be created automatically to ensure accessibility of
+# serfvices under this domain (e.g., gitlab.mydomain.com)
 project_domain_name: "{{TODO:REPLACE}}"
 
 # If data analysis platform services (e.g., gitlab, mlflow, etc.) can not be
