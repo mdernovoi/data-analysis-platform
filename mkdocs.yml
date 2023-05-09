@@ -13,5 +13,5 @@ theme: readthedocs
 #  - search  # To have search functionality on the document
 #  - mkdocstrings  # To generate documentation from the code docstrings
 
-pages:
+nav:
   - Home: index.md
