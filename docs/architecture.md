@@ -132,20 +132,65 @@ However, no IDE requres the remote development targets to be actual machines of 
 
 ## Files and directories
 
+**TIP**: Use the table of content of your editor to collaps and expand different file-tree sections.
 
 ### `custom-data-analysis-platform-template`
 
+Main directory of your custom Data Analysis Platform repository.
+
+You can extend and modify this directory to your heart's content. This is your repository. You can rename it and host in your private GitHub account.
+
+> :warning: **NOTE**: it is loosely coupled with the original `data-analysis-platform` repository through the use of git submodules and the `Extension of the data-analysis-platform` section of the `Makefile`. 
+>
+> You can remove this connection, however in that case, all documentation and guides might loose applicability.
+
 #### `data-analysis-platform`
 
-#### `doc`
+The reference Data Analysis Platform implementation.
+
+> :warning: **NOTE**: This directory will be overwritten during version upgrades and thus should be used only as a reference.
+>
+> All runtime configuration files should be stored directrly in the `custom-data-analysis-platform-template` directory which is completely under your control.
+
+##### `doc`
+
+Documentation of the reference `data-analysis-platform`. Please start with the `index.md` file.
+
+##### `infrastructure`
+
+##### `src`
+
+- `environments`
+
+- `gitlab_ci_pipeline_example`
+
+##### `Makefile`
+
+The Makefile of the reference `data-analysis-platform` that simplifies provisioning, upgrades and overall management of the platform.
+
+**NOTE**: This file is imported by the Makefile of the `custom-data-analysis-platform-template` repository to provide functionality of the reference `data-analysis-platform` outside of this repository. This is accomplished by overwriting the `DATA_ANALYSIS_PLATFORM_SRC_PATH` and `DATA_ANALYSIS_PLATFORM_RUNTIME_PATH` variables.
+
+#### `docs`
+
+Directory for your custorm documentation.
 
 #### `infrastructure`
 
+Directory for your custorm infrastructure code.
+
+**NOTE**: This directory is required for the default installation procedure outlined in [the provisioning guide](provision.md).
+
 #### `src`
+
+Directory for your custorm source code.
 
 #### `Makefile`
 
+Your custom Makefile that implements your platform management features.
 
+> :warning: **NOTE**: it extends the Makefile of the `data-analysis-platform`. The `Extension of the data-analysis-platform` section should be preserved to ensure compatibility with the reference `data-analysis-platform`.
+
+The goal is to provide functionality of the reference `data-analysis-platform` inside your custom repository. This is accomplished by overwriting the `DATA_ANALYSIS_PLATFORM_SRC_PATH` and `DATA_ANALYSIS_PLATFORM_RUNTIME_PATH` variables.
 
 
 

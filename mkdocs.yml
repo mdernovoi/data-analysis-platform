@@ -1,0 +1,18 @@
+
+site_name: Data Analysis Platform  
+
+docs_dir: docs
+
+theme:
+  name: readthedocs
+  highlightjs: true
+  locale: en
+
+
+#plugins:
+#  - search  # To have search functionality on the document
+#  - mkdocstrings  # To generate documentation from the code docstrings
+
+
+nav: 
+  - Home: index.md
