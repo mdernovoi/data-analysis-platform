@@ -1,6 +1,8 @@
 
 :construction: **Currently under construction** :construction:
 
+[**FULL-SIZE DIAGRAM**](res/architecture_overview.pdf)
+
 ![architecture overview](https://github.com/mdernovoi/data-analysis-platform-static-content/blob/main/res/architecture_overview.png)
 
 - `infrastructure/secrets`
