@@ -1,8 +1,10 @@
 
 site_name: Data Analysis Platform 
+site_description: A powerful and versatile data analysis platform infrastructure framework.
+site_author: Maxim Dernovoi
 
 repo_url: https://github.com/mdernovoi/data-analysis-platform
-repo_name: 'GitHub'
+repo_name: 'mdernovoi/data-analysis-platform'
 
 docs_dir: docs
 
@@ -15,3 +17,10 @@ theme: readthedocs
 
 nav:
   - Home: index.md
+  - Architecture and Concepts: architecture.md
+  - Installation: provision.md
+    - TLS security: tls.md
+    - Customization: customization.md
+    - Upgrade: upgrade.md
+  - Development environments: environments.md
+  - Dev notes: developer.md
