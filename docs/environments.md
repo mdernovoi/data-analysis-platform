@@ -1,13 +1,17 @@
 
-TODO :construction: **Currently under construction** :construction:
+# Custom Docker Environments
 
-#### Src
+Reference the `README` of the `src/environments` directory in the `data-analysis-platform` repository for further info.
 
-**NOTE**: Steps in this section are not strictly necessary to be able to use the Data Analysis Platform. However, the `src` directory contains very useful code for actual data analysis projects (Docker environments, examples of GitLab Pipelines, etc.).
+Since many Python and R packages require **system-level dependencies**, which can not be managed with `venv` or `renv`, full-fledged docker **containers** are used for **development** and repeatable **execution in GitLab pipelines**.
 
-1) Copy all secrets templates from `secrets_templates` to the corresponding `secrets` directory, which Git ignores. 
+The idea is to reduce the gap between development and production environments by using the same containers for both purposes. Therefore, if something works during development, it will also work when the model is deployed to production.
 
-2) Search for `{{TODO:REPLACE}}` in the `src` directory and fill in all missing values. 
+To fully utilize the potential of a unified environment, **SSH** and a **Jupyter Server** are exposed, allowing for remote development. These containers look just like regular machines for an IDE with remote development capabilities such as **DataSpell** (recommended), **PyCharm**, or **VSCode**. 
 
-  **TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously.
+The IDE handles all data transfers, remote execution, and debugging while the code remains on your local machine. Therefore, if something goes wrong, you can just recreate the development containers and rerun your code. 
+
+**NOTE**: These containers can be used independently of the Data Analysis Platform. You can host them on GitHub and Docker Hub or build and run them on your local PC.
+
+
 

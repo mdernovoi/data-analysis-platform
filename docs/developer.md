@@ -116,6 +116,83 @@ git branch -d localBranchName
 git push origin --delete remoteBranchName
 ```
 
+## Trademarks
+
+### Postgres
+
+[policy](https://www.postgresql.org/about/policies/trademarks/)
+
+[logos](https://wiki.postgresql.org/wiki/Logo)
+
+#### reason 
+
+>  You may make fair use of Postgres or PostgreSQL to refer to the software in true factual statements. For example:
+>
+> - If it’s true, you can say in your software or documentation that certain software runs on, with, or is derived from PostgreSQL® software. 
+
+#### attribution
+
+`Postgres, PostgreSQL and the Slonik Logo are trademarks or registered trademarks of the PostgreSQL Community Association of Canada, and used with their permission.`
+
+### Gitlab
+
+[policy](https://about.gitlab.com/handbook/marketing/brand-and-product-marketing/brand/brand-activation/trademark-guidelines/)
+
+[logos](https://about.gitlab.com/press/press-kit/)
+
+#### reason 
+
+WIP: Permission requested.
+
+#### attribution
+
+`GITLAB is a trademark of GitLab Inc. in the United States and other countries and regions.`
+
+
+### MLflow
+
+policy: Apache 2.0 license
+
+[logos](https://github.com/mlflow/mlflow/tree/master/assets)
+
+#### reason 
+
+The Apache 2.0 license allows to use the trademark if `...required for reasonable and customary use in describing the origin of the Work...`
+
+#### attribution
+
+`MLflow is a trademark of LF Projects, LLC.`
+
+### Nginx
+
+policy: unknown
+
+logos: unknown
+
+#### reason 
+
+Unknown
+
+#### attribution
+
+`NGINX is a trademark of F5, Inc.`
+
+### Minio
+
+[policy](https://min.io/logo)
+
+[logos](https://min.io/logo)
+
+#### reason 
+
+`You can use MinIO trademarks to truthfully refer to and/or link to unmodified MinIO programs, products, services and technologies.`
+
+#### attribution
+
+`MINIO is a "registered" trademark of the MinIO Corporation.`
+
+
+
 ## Misc
 
 - 

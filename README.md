@@ -8,9 +8,13 @@ The Data Analysis Platform is a powerful and versatile infrastructure framework 
 
 This platform is entirely **technology agnostic**, making it suitable for use with any tool or language (BYOS - Bring Your Own Software principle). It is also designed with enterprise use in mind and offers easy deployment and built-in security features.
 
-[Project backlog](https://github.com/users/mdernovoi/projects/2)
+## Usage
 
-## Goal
+For installation and usage instructions consult the documentation in the `docs/` directory.
+
+**Start here**: [Documentation index](docs/index.md).
+
+## Mission
 
 The goal of this project is not to create the next "everything you will ever need" tool or something like this. It is more to **start a conversation** about the infrastructure for data analysis projects of all kinds and in all environments. 
 
@@ -20,15 +24,9 @@ Maybe specialized AI plattforms such as [ClearML](https://clear.ml/), [MLRun](ht
 
 Then, what is the best data analysis tool out there? I certainly do not know this. This question has no one-size-fits-all answer. So let us start a discussion in this repository. 
 
-I created this framework to address issues my colleagues and I encountered during our data analysis adventures. However, the main idea was always **to make something extensible and adaptable since everyone has other requirements and operational conditions**. The [architecture overview](doc/architecture.md) describes how this difficult requirement has been implemented in the Data Analysis Platform ([full documentation](doc/index.md)).
+I created this framework to address issues my colleagues and I encountered during our data analysis adventures. However, the main idea was always **to make something extensible and adaptable since everyone has other requirements and operational conditions**. The [architecture overview](docs/architecture.md) describes how this difficult requirement has been implemented in the Data Analysis Platform ([full documentation](docs/index.md)).
 
 Let us think together about how to improve data analysis projects. Increase reproducibility, decrease pain, and have more fun. Join me on this journey, and I am sure we will arrive at interesting solutions and have many exciting conversations.
-
-## Usage
-
-For installation and usage instructions consult the documentation in the `doc/` directory.
-
-**Start here**: [Documentation index](doc/index.md).
 
 ## Questions?
 
@@ -42,7 +40,6 @@ Please suggest any improvements or express wishes in the Issues section. A pull 
 
 ### Important
 
-- [ ] Write thorough documentation and some HowTos.
 - [ ] Add monitoring of all services.
     - Some users might want to use their existing monitoring infrastructure.
     - Suggestion: Grafana, Prometheus and AlertManager
