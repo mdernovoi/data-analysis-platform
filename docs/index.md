@@ -3,36 +3,30 @@
 
 ## Quick links
 
-### :warning: Architecture and system structure
+### Architecture and system structure
 
-- [How does the Data Analysis Platform work](architecture.md)
+- [**Architecture and concepts**](architecture.md)
 
-- [What is the purpose of individual files and directories](architecture.md)
+- [Development in custom docker environments](environments.md)
+
+- [Services and credentials](credentials_services.md)
+
+- [File and directory structure](files_and_directories.md)
 
 ### Installation and configuration
 
-- [Initial installation and provisioning](provision.md)
+- [**Installation**](provision.md)
 
-- [How to enable or disable TLS](tls.md)
+- [Platform customization](customization.md)
 
-- [How to customize the platform to adapt to your needs](customization.md)
+- [Upgrade to new versions](upgrade.md)
 
-- [How to upgrade the platform to a new version](upgrade.md)
+- [TLS management](tls.md)
 
-## Documentation TOC
-
-- [Architecture overview](architecture.md)
-
-- [Provisioning and configuration](provision.md)
-    
-    - [TLS security](tls.md)
-    
-    - [Customization](customization.md)
-    
-    - [Version upgrade](upgrade.md)
-
-- [Reproducible docker development environments](environments.md)
+### Misc
 
 - [Platform developer notes](developer.md)
+
+
 
 

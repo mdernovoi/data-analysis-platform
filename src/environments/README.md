@@ -1,15 +1,19 @@
 
 TODO :construction: **Currently under construction** :construction:
 
+Reference the `docs/environments.md` file for an explanation of what this repository is good for.
+
 ## HOWTO use
 
 1) Replace all `{{TODO:REPLACE}}` in this folder with appropriate values.
 
 > :warning: Pay attention to comments before and after the `{{TODO:REPLACE}}` placeholders for further details.
 
+**TIP**: You can use Visual Studio Code or `egrep` to search for strings in multiple files simultaneously
+
 2) (Optional) Create a`dev` group with internal visibility in Gitlab.
 
-3) Initialize a new git repository in this directory.
+3) Initialize a new git repository in this directory. (TODO: explain how to work with git submodules).
 
 4) Create a GitLab project (e.g., `environments` with internal visibility).
 
@@ -30,4 +34,5 @@ ssh-keygen -f ssh_host_rsa_key -N '' -t rsa -b 4096
 ssh-keygen -f ssh_host_ecdsa_key -N '' -t ecdsa -b 521
 ssh-keygen -f ssh_host_ed25519_key -N '' -t ed25519 -b 521
 ```
+
 

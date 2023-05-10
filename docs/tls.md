@@ -3,7 +3,7 @@
 
 > :warning: Before applying any changes to the system, it is recommended to take a full backup of the machine in case something goes wrong.
 
-The default installation of the Data Analysis Platform comes with TLS disabled. This is great for testing and local development since no certificate management is required. All services are available with `http://` urls. 
+The default installation of the Data Analysis Platform comes with TLS disabled. This is great for testing and local development since no certificate management is required. All services are available with `http://` URLs. 
 
 However, a setup without TLS is not recommended for a production environment since all data are transferred unencrypted.
 
@@ -104,9 +104,9 @@ To configure TLS several places are relevant:
 4) Regenerate all configuration files:
 
     ```Shell
-    cd infrastructure/ansible ;\
+    cd infrastructure/ansible 
 
-    ansible-playbook -i hosts --ask-become-pass provision_service-host.yml ;\
+    ansible-playbook -i hosts --ask-become-pass provision_service-host.yml 
 
     ansible-playbook -i hosts --ask-become-pass provision_runner-host.yml
     ```
