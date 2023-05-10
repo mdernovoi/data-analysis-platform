@@ -1,7 +1,17 @@
 
 # Data Analysis Platform
 
-## Quick links
+## QuickStart
+
+1) [Understand the architecture and concepts](architecture.md)
+
+2) [Perform a standard installation](provision.md)
+
+3) [Review the file and directory structure](files_and_directories.md)
+
+4) Read the [full documentation](#table-of-contents)
+
+## Table Of Contents
 
 ### Architecture and system structure
 
@@ -23,9 +33,9 @@
 
 - [TLS management](tls.md)
 
-### Misc
+### Internal development
 
-- [Platform developer notes](developer.md)
+- [Developer notes](developer.md)
 
 
 

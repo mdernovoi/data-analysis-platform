@@ -189,8 +189,21 @@ Unknown
 
 #### attribution
 
-`MINIO is a "registered" trademark of the MinIO Corporation.`
+`MINIO is a trademark of the MinIO Corporation.`
 
+### Portainer
+
+policy: none
+
+logos: In permission granting email from 2023-05-12.
+
+#### reason 
+
+Granted permission per email on 2023-05-12 (main email account).
+
+#### attribution
+
+`Portainer is a trademark of Portainer.io.`
 
 
 ## Misc

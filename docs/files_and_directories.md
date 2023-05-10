@@ -35,7 +35,7 @@ Directory for your custom application source code.
 
 Your custom Makefile that implements platform management features.
 
-The goal is to provide the reference `data-analysis-platform` functionality inside your custom repository. This is accomplished by overwriting the `DATA_ANALYSIS_PLATFORM_SRC_PATH` and `DATA_ANALYSIS_PLATFORM_RUNTIME_PATH` variables of the Makefile of the `data-analysis-platform` repository.
+The goal is to provide the reference `data-analysis-platform` functionality inside your custom repository. This is accomplished by overwriting the `DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH` and `DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH` variables of the Makefile of the `data-analysis-platform` repository.
 
 ## `data-analysis-platform`
 
@@ -111,7 +111,7 @@ Infrastructure definition templates of the Data Analysis Platform. You can copy 
 
 The Makefile of the reference `data-analysis-platform`. It simplifies provisioning, upgrades, and overall management of the platform.
 
-**NOTE**: This file is imported by the Makefile of the `custom-data-analysis-platform-template` repository to provide functionality of the reference `data-analysis-platform` outside of its repository. This is accomplished by overwriting the `DATA_ANALYSIS_PLATFORM_SRC_PATH` and `DATA_ANALYSIS_PLATFORM_RUNTIME_PATH` variables.
+**NOTE**: This file is imported by the Makefile of the `custom-data-analysis-platform-template` repository to provide functionality of the reference `data-analysis-platform` outside of its repository. This is accomplished by overwriting the `DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH` and `DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH` variables.
 
 
 

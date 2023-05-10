@@ -10,7 +10,7 @@
 > - Configuration of journald
 > - Static DNS entries in `/etc/hosts`
 
-> :warning: **NOTE**: reference the [architecture description](architecture.md) to understand how the Data Analysis Platform is structured and how it works. **This is required to understand the provisioning process.**
+> :warning: **NOTE**: reference the [architecture description](architecture.md) and the [files and directories overview](files_and_directories.md) to understand how the Data Analysis Platform is structured and how it works. **This is required to understand the provisioning process.**
 
 This guide describes a **standard installation** on a **local machine (no remote ansible)**. To learn how to customize your setup, please refer to [the customization guide](customization.md).
 
