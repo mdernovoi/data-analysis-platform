@@ -126,7 +126,7 @@ http {
             # otherwise nginx won't start untill all endpoint are available
             # ref: https://stackoverflow.com/a/54719226
             resolver                           127.0.0.11 valid=30s;
-            set $upstream_portainer            portainer;
+            set $upstream_portainer            portainer-runner.{{ project_domain_name }};
 
             proxy_pass                         http://$upstream_portainer:9000;
             proxy_http_version                 1.1;

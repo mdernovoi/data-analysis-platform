@@ -43,7 +43,7 @@ services:
         target: /etc/nginx/dhparam.pem
 {% endif %}
   
-  portainer:
+  portainer-service:
     # refs:
     # - https://docs.portainer.io/advanced/reverse-proxy/nginx
     # - https://docs.portainer.io/start/install-ce/server/docker/linux
@@ -235,6 +235,7 @@ services:
       data-analysis-platform_service:
         aliases:
           - minio.{{ project_domain_name }}
+          - minio-console.{{ project_domain_name }}
     profiles:
       - first-stage
       - all

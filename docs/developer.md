@@ -106,6 +106,15 @@ Checkout a remote branch as a local branch:
 git checkout -b local_branch_name origin/remote_branch_name
 ```
 
+Delete branches
+
+```Shell
+// delete branch locally
+git branch -d localBranchName
+
+// delete branch remotely
+git push origin --delete remoteBranchName
+```
 
 ## Misc
 
