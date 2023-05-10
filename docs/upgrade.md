@@ -11,7 +11,11 @@ To upgrade to the latest `data-analysis-platform` release, execute the following
 
 1) Go to the root of your own `custom-data-analysis-platform-template` repository directory.
 
-2) Execute `make upgrade-data-analysis-platform-src-repository-to-latest-release`
+2) Execute 
+
+    ```Shell
+    make upgrade-data-analysis-platform-src-repository-to-latest-release
+    ```
 
 3) Carefully review the output of the previous command. It lists all changes between your and the latest version of the template files.
 
