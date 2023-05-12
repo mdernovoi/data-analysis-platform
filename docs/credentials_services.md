@@ -53,7 +53,15 @@ password: `infrastructure/secrets/gitlab_initial_root_password.txt`
 
 **Credentials**
 
-Currently, no authentication is required.
+The nginx-proxy of the service-host performs HTTP Basic Authentication. Configuration in the MLflow section of `infrastructure/config/nginx-proxy/nginx-service.conf`.
+
+- [How to create a new user-password pair](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/) (or consult the `mlflow_nginx-proxy_htpasswd` file).
+
+- [How to specify Basic Authentication credentials when logging to the tracking server](https://www.mlflow.org/docs/latest/tracking.html#logging-to-a-tracking-server) (MLFLOW_TRACKING_USERNAME and MLFLOW_TRACKING_PASSWORD environment variables).
+
+user: in `infrastructure/secrets/mlflow_nginx-proxy_htpasswd`
+
+password (hashed): in `infrastructure/secrets/mlflow_nginx-proxy_htpasswd`
 
 ### minio
 

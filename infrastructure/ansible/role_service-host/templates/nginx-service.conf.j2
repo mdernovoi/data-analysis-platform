@@ -192,6 +192,9 @@ http {
         ssl_certificate_key                  /etc/nginx/ssl/privkey.pem;
 {% endif %}
 
+        auth_basic                           "Private MLflow";
+        auth_basic_user_file                 /run/secrets/mlflow_nginx-proxy_htpasswd;
+
         # security headers
         add_header X-XSS-Protection          "1; mode=block" always;
         add_header X-Content-Type-Options    "nosniff" always;
