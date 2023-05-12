@@ -31,6 +31,9 @@ services:
         source: {{ paths.data }}/{{ host_prefix }}_nginx-proxy/nginx-service.conf
         target: /etc/nginx/nginx.conf
     # secrets
+      - type: bind
+        source: {{ paths.secrets }}/mlflow_nginx-proxy_htpasswd
+        target: /run/secrets/mlflow_nginx-proxy_htpasswd
 {% if use_tls %}
       - type: bind
         source: {{ paths.secrets }}/fullchain.pem

@@ -179,6 +179,16 @@ secrets:
   type: "file"
   owner: "{{ infrastructure_account.user }}"
   group: "{{ infrastructure_account.group }}"
+  # Since 1.17.0, both alpine- and debian-based images variants use the same user and group ids
+  # to drop the privileges for worker processes:
+  # $ id
+  # uid=101(nginx) gid=101(nginx) groups=101(nginx)
+  # ref: https://hub.docker.com/_/nginx
+- path: "{{ paths.secrets }}/mlflow_nginx-proxy_htpasswd"
+  source: "../secrets/mlflow_nginx-proxy_htpasswd"
+  type: "file"
+  owner: "101"
+  group: "101"
 
 ## gitlab
 - path: "{{ paths.secrets }}/gitlab_initial_root_password.txt"

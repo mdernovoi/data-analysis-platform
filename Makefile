@@ -31,6 +31,7 @@ install-system-prerequisites :
 	@echo "Installing prerequisites..."
 	@echo "System packages"
 	sudo apt-get install -y \
+		apache2-utils \
 		build-essential \
 		curl \
 		git \
