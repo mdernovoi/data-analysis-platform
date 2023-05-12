@@ -111,9 +111,9 @@ Store your tabular datasets here to leverage the full power of data management i
 
 #### portainer
 
-[Portainer](https://www.portainer.io/) is a popular web UI for Docker management. Typing Docker CLI commands can get tedious fast.
+[Portainer](https://www.portainer.io/) is a universal container management platform for Docker and Kubernetes. Typing Docker CLI commands can get tedious fast.
 
-**NOTE**: This container is directly connected to the docker socket and thus is a security concern since it can access every file on the host machine. If you want to harden your setup, this service can be removed since it is optional for the operation of the Data Analysis Platform.
+**NOTE**: This container is directly connected to the docker socket, and by nature, it has access to every file on the host machine. Portainer provides details about [Docker Roles and Permissions](https://docs.portainer.io/advanced/docker-roles-and-permissions) as well as a blog titled [Secure Your Portainer Setup with Security Controls](https://www.portainer.io/blog/secure-your-portainer-setup-with-security-controls) to help understand this more in detail. If you want to harden your setup, this service can be removed since it is optional for the operation of the Data Analysis Platform.
 
 #### nginx-proxy
 
@@ -143,9 +143,9 @@ These containers are ephemeral. If something goes wrong, you can recreate them. 
 
 #### portainer
 
-[Portainer](https://www.portainer.io/) is a popular web UI for Docker management. Typing Docker CLI commands can get tedious fast.
+[Portainer](https://www.portainer.io/) is a universal container management platform for Docker and Kubernetes. Typing Docker CLI commands can get tedious fast.
 
-**NOTE**: This container is directly connected to the docker socket and thus is a security concern since it can access every file on the host machine. If you want to harden your setup, this service can be removed since it is optional for the operation of the Data Analysis Platform.
+**NOTE**: This container is directly connected to the docker socket, and by nature, it has access to every file on the host machine. Portainer provides details about [Docker Roles and Permissions](https://docs.portainer.io/advanced/docker-roles-and-permissions) as well as a blog titled [Secure Your Portainer Setup with Security Controls](https://www.portainer.io/blog/secure-your-portainer-setup-with-security-controls) to help understand this more in detail. If you want to harden your setup, this service can be removed since it is optional for the operation of the Data Analysis Platform.
 
 #### nginx-proxy
 
