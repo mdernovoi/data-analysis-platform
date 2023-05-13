@@ -73,7 +73,7 @@ This guide describes a **standard installation** on a **local machine (no remote
 4) Checkout the latest stable version of the data-analysis-platform repository (the latest release).
 
     ```Shell
-    make checkout-latest-data-analysis-platform-src-release
+    make checkout-latest-data-analysis-platform-templates-release
     ```
 
 5) Copy src templates to runtime directories.
@@ -81,7 +81,7 @@ This guide describes a **standard installation** on a **local machine (no remote
     Please reference the [architecture guide](architecture.md) and the [the customization guide](customization.md) to understand what happens in this step.
 
     ```Shell
-    make copy-files-for-default-installation-from-src-to-runtime
+    make copy-files-for-default-installation-from-templates-to-custom
     ```
 
 6) Replace all configuration placeholders.
@@ -95,7 +95,7 @@ This guide describes a **standard installation** on a **local machine (no remote
     >To learn how to enable TLS, reference the [tls guide](tls.md).
 
     ```Shell
-    make find-todo-replace-placeholders-in-runtime-files
+    make find-todo-replace-placeholders-in-custom-platform-infrastructure-files
     ```
     
 ## Deploy the platform

@@ -68,7 +68,6 @@ Please suggest any improvements or express wishes in the Issues section. A pull 
 
 ### Less important
 
-- [ ] Configure dependabot version alerts.
 - [ ] Add a `CONTRIBUTING.md` file describing how to contribute to the project.
 - [ ] Update `SECURITY.md` with concrete contact details.
 - [ ] Develop a backup solution to safely backup data from all services. A painless rollback to a previous version should be possible.
