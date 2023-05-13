@@ -7,7 +7,7 @@ python-dotenv == 1.0.0
 
 ## Visualization
 plotly == 5.14.1 
-kaleido == 0.2.1
+kaleido == 0.2.1.post1
 
 ## Image processing
 pillow == 9.5.0 
