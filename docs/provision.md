@@ -169,15 +169,9 @@ This guide describes a **standard installation** on a **local machine (no remote
 
 9) Now wait for GitLab to initialize (this might take several minutes) and continue with the provisioning of runner services (it can be done on the same machine).
 
-    **TIP**: The initial GitLab user is `root`, and the password is stored in `infrastructure/secrets/gitlab_initial_root_password.txt`.
+    **TIP**: The initial GitLab user is `root`, and the password is stored in `infrastructure/secrets/gitlab_initial_root_password.txt` (reference the [credentials and services description](credentials_services.md)).
 
-    **TIP**: Check out all provisioned services:
-
-    - `portainer-service.{{ project_domain_name }}`
-    - `pgadmin.{{ project_domain_name }}`
-    - `mlflow.{{ project_domain_name }}`
-    - `minio.{{ project_domain_name }}`
-    - `gitlab.{{ project_domain_name }}`
+    **TIP**: Check out all provisioned services in the [architecture overview](architecture.md) or the [credentials and services list](credentials_services.md).
 
 ### Runner host
 
@@ -241,9 +235,7 @@ This guide describes a **standard installation** on a **local machine (no remote
 
 7) Now, you are ready to use the Data Analysis Platform.
 
-    **TIP**: Check out all provisioned services:
-
-    - `portainer-runner.{{ project_domain_name }}`
+    **TIP**: Check out all provisioned services in the [architecture overview](architecture.md) or the [credentials and services list](credentials_services.md).
 
 8) Check out the [documentation](index.md) for further steps.
 

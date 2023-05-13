@@ -51,8 +51,6 @@ Please suggest any improvements or express wishes in the Issues section. A pull 
 
 ### Security
 
-- [ ] Add access control to the MLflow service (currently, no authentication is available)
-    - Idea: use nginx HTTP authentication.
 - [ ] Secure the ssh config of the dev-base environment container.
 - [ ] Hide the GitLab container registry behind the reverse proxy (currently, it is exposed due to compatibility issues).
     - Idea: Set server location in Minio.
