@@ -109,6 +109,13 @@ checkout-latest-data-analysis-platform-templates-release :
 	git fetch --all --tags ;\
 	git checkout tags/$$LATEST_VERSION ;\
 
+# `git diff` can use pagination if the output is too large.
+# Exiting the paginated view with `q` causes `git diff` to 
+# exit with a non-zero exit code and abort the whole script.
+# To prevent this from behaviour from interfering with
+# subsequent `git diff` commands the non-zero exit code
+# is caugt with `|| true`.
+# Reference: https://stackoverflow.com/a/11231970
 upgrade-data-analysis-platform-templates-repository-to-latest-release :
 	@echo "Upgrading files..."
 	@set -e ;\
@@ -129,23 +136,23 @@ upgrade-data-analysis-platform-templates-repository-to-latest-release :
 	echo "" ;\
 	echo "##### CONFIG #####" ;\
 	echo "" ;\
-	git diff tags/$$OLD_VERSION -- $(TEMPLATES_INFRASTRUCTURE_CONFIG_DIR) ;\
+	git diff tags/$$OLD_VERSION -- $(TEMPLATES_INFRASTRUCTURE_CONFIG_DIR) || true ;\
 	echo "" ;\
 	echo "##### SECRETS #####" ;\
 	echo "" ;\
-	git diff tags/$$OLD_VERSION -- $(TEMPLATES_INFRASTRUCTURE_SECRETS_DIR) ;\
+	git diff tags/$$OLD_VERSION -- $(TEMPLATES_INFRASTRUCTURE_SECRETS_DIR) || true ;\
 	echo "" ;\
 	echo "##### ANSIBLE #####" ;\
 	echo "" ;\
-	git diff tags/$$OLD_VERSION -- $(TEMPLATES_INFRASTRUCTURE_ANSIBLE_DIR) ;\
+	git diff tags/$$OLD_VERSION -- $(TEMPLATES_INFRASTRUCTURE_ANSIBLE_DIR) || true ;\
 	echo "" ;\
 	echo "##### SRC/ENVIRONMENTS #####" ;\
 	echo "" ;\
-	git diff tags/$$OLD_VERSION -- $(TEMPLATES_SRC_ENVIRONMENTS_DIR) ;\
+	git diff tags/$$OLD_VERSION -- $(TEMPLATES_SRC_ENVIRONMENTS_DIR) || true ;\
 	echo "" ;\
 	echo "##### SRC/GITLAB_CI_PIPELINE_EXAMPLE #####" ;\
 	echo "" ;\
-	git diff tags/$$OLD_VERSION -- $(TEMPLATES_SRC_GITLAB_CI_EXAMPLE_DIR) ;\
+	git diff tags/$$OLD_VERSION -- $(TEMPLATES_SRC_GITLAB_CI_EXAMPLE_DIR) || true ;\
 
 diff-infrastructure-templates-and-custom-directories :
 	@set -e ;\
@@ -177,8 +184,8 @@ diff-src-templates-and-custom-directories :
 	@echo "" ;\
 	echo "##### ENVIRONMENTS #####" ;\
 	echo "" 
-	-git diff --no-index $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_SRC_ENVIRONMENTS_DIR) $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_SRC_ENVIRONMENTS_DIR)
-	@echo "" ;\
+	-git diff --no-index $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_SRC_ENVIRONMENTS_DIR) $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_SRC_ENVIRONMENTS_DIR) ;\
+	echo "" ;\
 	echo "##### GITLAB CI PIPELINE EXAMPLE #####" ;\
-	echo "" 
+	echo ""
 	-git diff --no-index $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_SRC_GITLAB_CI_EXAMPLE_DIR) $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_SRC_GITLAB_CI_EXAMPLE_DIR)
