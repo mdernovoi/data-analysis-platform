@@ -10,11 +10,11 @@ This platform is entirely **technology agnostic**, making it suitable for use wi
 
 ## QuickStart
 
-1) [Understand the architecture and concepts](architecture.md)
+1) [Understand the architecture and concepts](docs/architecture.md)
 
-2) [Perform a standard installation](provision.md)
+2) [Perform a standard installation](docs/provision.md)
 
-3) [Review the file and directory structure](files_and_directories.md)
+3) [Review the file and directory structure](docs/files_and_directories.md)
 
 4) Read the [full documentation](docs/index.md#table-of-contents)
 
