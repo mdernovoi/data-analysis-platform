@@ -24,4 +24,5 @@ updates:
     directory: "/.github/dependabot_docker_proxy"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
 
