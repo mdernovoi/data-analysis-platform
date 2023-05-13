@@ -1,0 +1,27 @@
+version: 2
+updates:
+
+  # Maintain dependencies for pip
+  - package-ecosystem: "pip"
+    directory: "/infrastructure/ansible/role_service-host/scripts"
+    schedule:
+      interval: "weekly"
+  
+  # Maintain dependencies for pip
+  - package-ecosystem: "pip"
+    directory: "/src/environments/dev-python-r"
+    schedule:
+      interval: "weekly"
+  
+  # Maintain dependencies for pip
+  - package-ecosystem: "pip"
+    directory: "/src/gitlab_ci_pipeline_example"
+    schedule:
+      interval: "weekly"
+  
+  # Maintain dependencies for docker
+  - package-ecosystem: "docker"
+    directory: "/.github/dependabot_docker_proxy"
+    schedule:
+      interval: "weekly"
+
