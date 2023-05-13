@@ -88,7 +88,7 @@ This guide describes a **standard installation** on a **local machine (no remote
 
     In this step, all runtime files are searched for the `{{TODO:REPLACE}}` placeholder, and all occurrences are printed to the console.
 
-    Carefully review the command output and replace all placeholder occurrences with reasonable values. For a description of the purpose of individual files, please reference the [architecture guide](architecture.md).
+    Carefully review the command output and replace all placeholder occurrences with reasonable values. For a description of the purpose of individual files, please reference the [architecture](architecture.md) and [files and directories](files_and_directories.md) guides.
 
     > :warning: **NOTE**: The default installation of the Data Analysis Platform is not secured by TLS. Thus, placeholders in the `fullchain.pem`, `dhparam.pem`, and `privkey.pem` files do not have to be replaced with actual values. 
     >
