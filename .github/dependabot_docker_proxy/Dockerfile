@@ -7,6 +7,7 @@ FROM dpage/pgadmin4:7.0
 
 FROM postgres:15.2
 
+# TODO: for some reason ignored by dependabot...
 FROM minio/minio:RELEASE.2023-04-20T17-56-55Z
 
 FROM mdernovoi/mlflow:v1.2.1
