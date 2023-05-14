@@ -4,9 +4,9 @@
 
 ## Architecture
 
-**NOTE**: Reference `data-analysis-platform/docs/environments.md` and `data-analysis-platform/src/environments/README.md` to understand the workflow with custom docker environments.
+**NOTE**: Reference [`data-analysis-platform/docs/environments.md`](../../docs/environments.md) and [`data-analysis-platform/src/environments/README.md`](../environments/README.md) to understand the workflow with custom docker environments.
 
-This repository contains instructions on using your custom docker development environments (from `data-analysis-platform/src/environments`) in reproducible GitLab data analysis pipelines. 
+This repository contains instructions on using your custom docker development environments (from [`data-analysis-platform/src/environments`](../environments/)) in reproducible GitLab data analysis pipelines. 
 
 The main idea of this example is that doing everything in Jupyter Notebooks is not reproducible and bad for future deployments to production. 
 
@@ -75,12 +75,13 @@ Since GitLab pipelines are very flexible, you can do whatever you want in them a
 
         Upload it to GitLab as a `Secure File`. 
 
-10)  **NOTE**: If you are not using TLS, adding the GitLab registry to `insecure-registries` in the `/etc/docker/daemon.json` configuration file of the host where the GitLab runner is executing your code might be necessary. Remember to restart docker after configuration changes!
+10)  **NOTE**: If you are not using TLS, adding the GitLab registry to `insecure-registries` in the `/etc/docker/daemon.json` configuration file of the host where the GitLab runner is executing your code is necessary. Remember to restart docker after configuration changes!
 
     ```json
     {
     "insecure-registries" : ["http://gitlab-registry.mydomain.com:5005"]
     }
+    ```
 
     **NOTE**: Using insecure HTTP connections in a production environment is not recommended.
 

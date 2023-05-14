@@ -29,4 +29,61 @@ During [upgrades](upgrade.md), only files in the reference `data-analysis-platfo
 
 **NOTE**: If you want to keep a simple upgrade path and do not require extensive modifications of the Data Analysis Platform, it is beneficial not to modify your copy of the reference files too much since, during every upgrade, you have to apply new changes to your own configuration manually.
 
+## Perform configuration changes
+
+**NOTE**: Files in the `custom-data-analysis-platform-template` directory (except for the templates in the `data-analysis-platform` folder) can be arbitrarily modified and adapted to your needs.
+
+To modify your Data Analysis Platform setup:
+
+1) Go to the root of your own `custom-data-analysis-platform-template` repository directory.
+
+2) Perform all necessary adjustments.
+
+4) Stop all services.
+
+    ```Shell
+    docker compose \
+    --project-name data-analysis-platform-service \
+    --file {{ paths.provision }}/service-compose.yaml \
+    --profile all \
+    stop
+    ```
+
+    ```Shell
+    docker compose \
+    --project-name data-analysis-platform-runner \
+    --file {{ paths.provision }}/runner-compose.yaml \
+    --profile all \
+    stop
+    ```
+
+5) Regenerate all configuration files:
+
+    ```Shell
+    cd infrastructure/ansible
+
+    ansible-playbook -i hosts --ask-become-pass provision_service-host.yml
+
+    ansible-playbook -i hosts --ask-become-pass provision_runner-host.yml
+    ```
+
+    **NOTE**: Only change configurations through the regeneration of configuration files. Otherwise your custom changes might get overwritten during the execution of Ansible playbooks.
+
+6) Start all services.
+
+    ```Shell
+    docker compose \
+    --project-name data-analysis-platform-service \
+    --file {{ paths.provision }}/service-compose.yaml \
+    --profile all \
+    up
+    ```
+
+    ```Shell
+    docker compose \
+    --project-name data-analysis-platform-runner \
+    --file {{ paths.provision }}/runner-compose.yaml \
+    --profile all \
+    up
+    ```
 

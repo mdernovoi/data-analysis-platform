@@ -240,6 +240,7 @@ This guide describes a **standard installation** on a **local machine (no remote
 8) Further steps:
 
     - Learn how to use [custom development environments](environments.md) for reproducible remote development.
+    - [Check out a GitLab Pipeline example with MLflow and custom docker environments](../src/gitlab_ci_pipeline_example/README.md) (`src/gitlab_ci_pipeline_example`).
     - Check out the [documentation](index.md).
 
 
