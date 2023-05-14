@@ -9,7 +9,11 @@
 
 3) [Review the file and directory structure](files_and_directories.md)
 
-4) Read the [full documentation](#table-of-contents)
+4) [Learn about custom docker development environments](environments.md) (`src/environments`)
+
+5) [Check out a GitLab Pipeline example with MLflow and custom docker environments](../src/gitlab_ci_pipeline_example/README.md) (`src/gitlab_ci_pipeline_example`).
+
+6) Read the [full documentation](#table-of-contents)
 
 ## Table Of Contents
 
@@ -32,6 +36,10 @@
 - [Upgrade to new versions](upgrade.md)
 
 - [TLS management](tls.md)
+
+### Usage
+
+- [A GitLab Pipeline example with MLflow and custom docker environments](../src/gitlab_ci_pipeline_example/README.md) (`src/gitlab_ci_pipeline_example`).
 
 ### Internal development
 

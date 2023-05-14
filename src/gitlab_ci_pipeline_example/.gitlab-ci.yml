@@ -14,6 +14,7 @@ test_mlflow_python:
     SECURE_FILES_DOWNLOAD_PATH: './secrets/'
     # Example: https://mlflow.mydomain.com
     MLFLOW_URL: "https://{{TODO:REPLACE}}"
+    # Example: https://minio.mydomain.com
     MINIO_URL: "https://{{TODO:REPLACE}}"
   script:
     # Download tool for secure_files management and

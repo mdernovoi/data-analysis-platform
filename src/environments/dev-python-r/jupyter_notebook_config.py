@@ -16,16 +16,18 @@ c.NotebookApp.open_browser = False
 
 ## Hashed password to use for web authentication.
 #  
-#                        To generate, type in a python/IPython shell:
-#  
-#                          from notebook.auth import passwd; passwd()
-#  
-#                        The string should be of the form type:salt:hashed-
-#  password.
-#  Default: ''
-
-# Reference: secrets_templates/jupyter_notebook_password.txt
-# TODO: insert dynamically
+#  To generate:
+#
+#   1) Install prerequisites: `sudo apt-get install python3 python3-pip python3-venv`
+#   2) Create python virtual environment: `python3 -m venv .venv`
+#   3) Activate the virtual environment: `source .venv/bin/activate`
+#   4) Install Jupyter Notebook: `pip install notebook`
+#   5) Generate hashed password with value from `secrets/jupyter_notebook_password.txt`: 
+#       `python3`
+#       `from notebook.auth import passwd; passwd()`
+#   6) Copy the output to the `c.NotebookApp.password` field of this config.
+#
+# TODO: generate and insert dynamically
 c.NotebookApp.password = {{TODO:REPLACE}} 
 
 ## Forces users to use a password for the Notebook server.

@@ -27,10 +27,6 @@ Directory for your custorm infrastructure code.
 
 **NOTE**: This directory is required for the default installation procedure outlined in [the provisioning guide](provision.md).
 
-## `src`
-
-Directory for your custom application source code.
-
 ## `Makefile`
 
 Your custom Makefile that implements platform management features.

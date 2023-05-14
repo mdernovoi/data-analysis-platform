@@ -1,5 +1,13 @@
 ARG BASE_IMAGE_NAME=dev-base
+# The GitLab Docker registry of your Data Analysis Platform GitLab installation.
+# Reference the `gitlab` section in `data-analysis-platform/docs/credentials_services.md`
+# and the README of this repository.
+# Structure:
+#   - gitlab registry url with port
+#   - group name of the `environments` repository
+#   - the `environments` repository
 # Example: gitlab-registry.mydomain.com:5005/dev/environments
+#
 ARG BASE_IMAGE_REPOSITORY={{TODO:REPLACE}}
 ARG BASE_IMAGE_TAG=latest
 

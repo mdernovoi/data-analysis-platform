@@ -14,7 +14,7 @@ To upgrade to the latest `data-analysis-platform` release, execute the following
 2) Execute 
 
     ```Shell
-    make upgrade-data-analysis-platform-src-repository-to-latest-release
+    make upgrade-data-analysis-platform-templates-repository-to-latest-release
     ```
 
 3) Carefully review the output of the previous command. It lists all changes between your and the latest version of the template files.

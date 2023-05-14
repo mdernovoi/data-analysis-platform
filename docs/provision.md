@@ -73,20 +73,20 @@ This guide describes a **standard installation** on a **local machine (no remote
 4) Checkout the latest stable version of the data-analysis-platform repository (the latest release).
 
     ```Shell
-    make checkout-latest-data-analysis-platform-src-release
+    make checkout-latest-data-analysis-platform-templates-release
     ```
 
-5) Copy src templates to runtime directories.
+5) Copy templates to custom installation directories.
 
     Please reference the [architecture guide](architecture.md) and the [the customization guide](customization.md) to understand what happens in this step.
 
     ```Shell
-    make copy-files-for-default-installation-from-src-to-runtime
+    make copy-files-for-default-installation-from-templates-to-custom
     ```
 
 6) Replace all configuration placeholders.
 
-    In this step, all runtime files are searched for the `{{TODO:REPLACE}}` placeholder, and all occurrences are printed to the console.
+    In this step, all custom infrastructure files are searched for the `{{TODO:REPLACE}}` placeholder, and all occurrences are printed to the console.
 
     Carefully review the command output and replace all placeholder occurrences with reasonable values. For a description of the purpose of individual files, please reference the [architecture](architecture.md) and [files and directories](files_and_directories.md) guides.
 
@@ -95,7 +95,7 @@ This guide describes a **standard installation** on a **local machine (no remote
     >To learn how to enable TLS, reference the [tls guide](tls.md).
 
     ```Shell
-    make find-todo-replace-placeholders-in-runtime-files
+    make find-todo-replace-placeholders-in-custom-platform-infrastructure-files
     ```
     
 ## Deploy the platform
@@ -237,6 +237,9 @@ This guide describes a **standard installation** on a **local machine (no remote
 
     **TIP**: Check out all provisioned services in the [architecture overview](architecture.md) or the [credentials and services list](credentials_services.md).
 
-8) Check out the [documentation](index.md) for further steps.
+8) Further steps:
+
+    - Learn how to use [custom development environments](environments.md) for reproducible remote development.
+    - Check out the [documentation](index.md).
 
 

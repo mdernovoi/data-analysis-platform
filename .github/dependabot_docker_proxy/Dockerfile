@@ -1,3 +1,4 @@
+# dependabot proxy for automatic version scanning
 
 FROM nginx:1.24
 
