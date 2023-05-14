@@ -112,7 +112,7 @@ services:
 
   postgres-service:
   # ssl is enforced: https://www.percona.com/blog/enabling-and-enforcing-ssl-tls-for-postgresql-connections/
-      image: postgres:15.2
+      image: postgres:15.3
       command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
       deploy:
           replicas: 1
@@ -167,7 +167,7 @@ services:
   
   postgres-data:
   # ssl is enforced: https://www.percona.com/blog/enabling-and-enforcing-ssl-tls-for-postgresql-connections/
-      image: postgres:15.2
+      image: postgres:15.3
       command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
       deploy:
           replicas: 1
