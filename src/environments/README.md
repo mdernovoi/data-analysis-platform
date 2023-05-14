@@ -104,7 +104,7 @@ To optimize the build process, all environments extend each other. For example, 
             **NOTE**: Some filenames contain forbidden characters such as dots, etc (GitLab will warn you). Replace all illegal characters with underscores and reference variable names in the `.gitlab-ci.yml` file for specific values to ensure compatibility.
 
 
-    **NOTE: The Secret Files feature of GitLab pipelines is usually used since it is more secure and flexible. However, the kaniko executor image does not allow to use this feature.
+    **NOTE**: The Secret Files feature of GitLab pipelines is usually used since it is more secure and flexible. However, the kaniko executor image does not allow to use this feature.
 
 10) If you are **not using TLS** to secure your Data Analysis Platform installation **(the default)** your have to modify the `.gitlab-ci-yml`:
 
@@ -158,6 +158,8 @@ To optimize the build process, all environments extend each other. For example, 
     - [Jupyter Notebook connection with DataSpell (recommended)](https://www.jetbrains.com/help/dataspell/configuring-jupyter-notebook.html#remote)
     
     - [Jupyter Notebook connection with VSCode](https://code.visualstudio.com/docs/datascience/jupyter-notebooks#_connect-to-a-remote-jupyter-server)
+
+13) Check out [a GitLab Pipeline example with MLflow and custom docker environments](../gitlab_ci_pipeline_example/README.md) (`src/gitlab_ci_pipeline_example`).
 
 ## Files and Directories
 
