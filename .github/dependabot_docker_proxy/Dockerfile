@@ -11,7 +11,7 @@ FROM postgres:15.2
 # TODO: for some reason ignored by dependabot...
 FROM minio/minio:RELEASE.2023-04-20T17-56-55Z
 
-FROM mdernovoi/mlflow:v1.2.1
+FROM mdernovoi/mlflow:v1.4.0
 
 FROM gitlab/gitlab-ce:15.11.0-ce.0
 
