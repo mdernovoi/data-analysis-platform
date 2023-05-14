@@ -1,7 +1,7 @@
 
 # Custom Docker Environments
 
-Reference the `README` of the `src/environments` directory in the `data-analysis-platform` repository for further info.
+**NOTE**: Reference the `README` of the `src/environments` directory in the `data-analysis-platform` repository for further information.
 
 Since many Python and R packages require **system-level dependencies**, which can not be managed with `venv` or `renv`, full-fledged docker **containers** are used for **development** and repeatable **execution in GitLab pipelines**.
 

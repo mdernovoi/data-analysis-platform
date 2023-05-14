@@ -9,7 +9,9 @@
 
 3) [Review the file and directory structure](files_and_directories.md)
 
-4) Read the [full documentation](#table-of-contents)
+4) [Learn about custom docker development environments](environments.md) (`src/environments`)
+
+5) Read the [full documentation](#table-of-contents)
 
 ## Table Of Contents
 

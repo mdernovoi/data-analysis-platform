@@ -237,6 +237,9 @@ This guide describes a **standard installation** on a **local machine (no remote
 
     **TIP**: Check out all provisioned services in the [architecture overview](architecture.md) or the [credentials and services list](credentials_services.md).
 
-8) Check out the [documentation](index.md) for further steps.
+8) Further steps:
+
+    - Learn how to use [custom development environments](environments.md) for reproducible remote development.
+    - Check out the [documentation](index.md).
 
 

@@ -16,7 +16,9 @@ This platform is entirely **technology agnostic**, making it suitable for use wi
 
 3) [Review the file and directory structure](docs/files_and_directories.md)
 
-4) Read the [full documentation](docs/index.md#table-of-contents)
+4) [Learn about custom docker development environments](docs/environments.md) (`src/environments`)
+
+5) Read the [full documentation](docs/index.md#table-of-contents)
 
 ## Mission
 
