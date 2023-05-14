@@ -67,4 +67,6 @@ To upgrade to the latest `data-analysis-platform` release, execute the following
     up
     ```
 
+    **NOTE**: GitLab takes a very long time to performa all upgrades.
+
 
