@@ -18,7 +18,8 @@ library(rjson)
 library(devtools)
 library(stringi)
 
-# Read a list of required packages and install them.
+# Read a json list of required packages and install them with ALL SYSTEM DEPENDENCIES.
+# Example of package list in `r_packages.json`
 install_r_packages <- function(file_name) {
   
   if (!file.exists(file_name)) {
@@ -48,7 +49,7 @@ install_r_packages <- function(file_name) {
   }
 }
 
-# Treat first command line argument as file name with dependencies and install required packages
+# Treat first command line argument as file name with dependencies and install requested packages
 args <- commandArgs(trailingOnly=TRUE)
 install_r_packages(args[1])
 

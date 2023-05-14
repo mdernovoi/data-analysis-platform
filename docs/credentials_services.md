@@ -8,26 +8,7 @@ Reference [files and directories](files_and_directories.md) to understand the fi
 
 ## custom development environment
 
-**Services**
-
-- SSH: `:22`
-- Jupyter Notebook: `:8888`
-
-**Credentials**
-
-- SSH
-
-    authorized keys: `authorized_keys` in `src/environments/secrets` 
-    host identity: `ssh_host_rsa_key` and `ssh_host_rsa_key.pub` in `src/environments/secrets` 
-
-    **NOTE**: Setting the same host identity for all development containers is required. Otherwise, you must manually remove the previous identity from your local `known_hosts` file during each connection to the same IP.
-
-- Jupyter Notebook:
-
-    user: none
-    password: from `src/environments/secrets/jupyter_notebook_password.txt`
-
-    **NOTE**: This password has to be manually hashed and set in the `src/environments/dev-python-r/jupyter_notebook_config.py` file at `c.NotebookApp.password`. **Comments in the config file describe how to generate a hashed password**.
+Reference the `README.md` file in `data-analysis-platform/src/environments`.
 
 ## service-host
 

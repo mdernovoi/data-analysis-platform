@@ -7,8 +7,7 @@
 		get-current-data-analysis-platform-templates-release $\
 		checkout-latest-data-analysis-platform-templates-release $\
 		upgrade-data-analysis-platform-templates-repository-to-latest-release $\
-		diff-infrastructure-templates-and-custom-directories $\
-		diff-src-templates-and-custom-directories
+		diff-infrastructure-templates-and-custom-directories
 
 DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH := .
 DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH := .
@@ -29,10 +28,8 @@ TEMPLATES_INFRASTRUCTURE_ANSIBLE_DIR := $(TEMPLATES_INFRASTRUCTURE_DIR)/ansible
 CUSTOM_INFRASTRUCTURE_ANSIBLE_DIR := $(CUSTOM_INFRASTRUCTURE_DIR)/ansible
 
 TEMPLATES_SRC_ENVIRONMENTS_DIR := $(TEMPLATES_SRC_DIR)/environments
-CUSTOM_SRC_ENVIRONMENTS_DIR := $(CUSTOM_SRC_DIR)/environments
 
 TEMPLATES_SRC_GITLAB_CI_EXAMPLE_DIR := $(TEMPLATES_SRC_DIR)/gitlab_ci_pipeline_example
-CUSTOM_SRC_GITLAB_CI_EXAMPLE_DIR := $(CUSTOM_SRC_DIR)/gitlab_ci_pipeline_example
 
 
 LATEST_DATA_ANALYSIS_PLATFORM_RELEASE_GITHUB_API_URL := $\
@@ -63,8 +60,6 @@ copy-files-for-default-installation-from-templates-to-custom :
 	cp -r $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_INFRASTRUCTURE_CONFIG_DIR)/* $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_INFRASTRUCTURE_CONFIG_DIR)/
 	cp -r $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_INFRASTRUCTURE_SECRETS_DIR)/* $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_INFRASTRUCTURE_SECRETS_DIR)/
 	cp -r $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_INFRASTRUCTURE_ANSIBLE_DIR)/* $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_INFRASTRUCTURE_ANSIBLE_DIR)/
-	cp -r $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_SRC_ENVIRONMENTS_DIR)/* $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_SRC_ENVIRONMENTS_DIR)/
-	cp -r $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_SRC_GITLAB_CI_EXAMPLE_DIR)/* $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_SRC_GITLAB_CI_EXAMPLE_DIR)/
 
 find-todo-replace-placeholders-in-custom-platform-infrastructure-files :
 	@echo "#######################################################################"
@@ -174,18 +169,3 @@ diff-infrastructure-templates-and-custom-directories :
 	echo "" 
 	-git diff --no-index $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_INFRASTRUCTURE_ANSIBLE_DIR) $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_INFRASTRUCTURE_ANSIBLE_DIR);\
 
-diff-src-templates-and-custom-directories :
-	@set -e ;\
-	echo "#######################################################################" ;\
-	echo "#" ;\
-	echo "# Diffs of src templates and custom files directories..." ;\
-	echo "#" ;\
-	echo "#######################################################################"
-	@echo "" ;\
-	echo "##### ENVIRONMENTS #####" ;\
-	echo "" 
-	-git diff --no-index $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_SRC_ENVIRONMENTS_DIR) $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_SRC_ENVIRONMENTS_DIR) ;\
-	echo "" ;\
-	echo "##### GITLAB CI PIPELINE EXAMPLE #####" ;\
-	echo ""
-	-git diff --no-index $(DATA_ANALYSIS_PLATFORM_TEMPLATES_PATH)/$(TEMPLATES_SRC_GITLAB_CI_EXAMPLE_DIR) $(DATA_ANALYSIS_PLATFORM_CUSTOM_VERSION_PATH)/$(CUSTOM_SRC_GITLAB_CI_EXAMPLE_DIR)

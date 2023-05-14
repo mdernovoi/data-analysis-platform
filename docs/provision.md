@@ -76,7 +76,7 @@ This guide describes a **standard installation** on a **local machine (no remote
     make checkout-latest-data-analysis-platform-templates-release
     ```
 
-5) Copy src templates to runtime directories.
+5) Copy templates to custom installation directories.
 
     Please reference the [architecture guide](architecture.md) and the [the customization guide](customization.md) to understand what happens in this step.
 
@@ -86,7 +86,7 @@ This guide describes a **standard installation** on a **local machine (no remote
 
 6) Replace all configuration placeholders.
 
-    In this step, all runtime files are searched for the `{{TODO:REPLACE}}` placeholder, and all occurrences are printed to the console.
+    In this step, all custom infrastructure files are searched for the `{{TODO:REPLACE}}` placeholder, and all occurrences are printed to the console.
 
     Carefully review the command output and replace all placeholder occurrences with reasonable values. For a description of the purpose of individual files, please reference the [architecture](architecture.md) and [files and directories](files_and_directories.md) guides.
 
