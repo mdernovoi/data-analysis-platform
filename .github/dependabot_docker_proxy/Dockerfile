@@ -17,4 +17,4 @@ FROM gitlab/gitlab-ce:15.11.0-ce.0
 
 FROM gitlab/gitlab-runner:ubuntu-v15.11.0
 
-FROm ghcr.io/mlflow/mlflow:v2.3.1
+FROm ghcr.io/mlflow/mlflow:v2.3.2
