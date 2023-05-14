@@ -4,7 +4,7 @@
 
 ## Architecture
 
-Reference `data-analysis-platform/docs/environments.md` to understand the workflow with custom docker environments.
+**NOTE**: Reference [`data-analysis-platform/docs/environments.md`](../../docs/environments.md) to understand the workflow with custom docker environments.
 
 This repository contains instructions on how to build custom docker development environments (images) for remote development with IDEs. 
 
@@ -30,22 +30,7 @@ To optimize the build process, all environments extend each other. For example, 
 
 ## QuickStart
 
-1) Create a new environment repository directory somewhere in your filesystem (let's call it `my-environments`).
-
-2) Copy the whole `environments` folder into `my-environments`.
-
-    The new directory structure should look something like this:
-
-    ```Shell
-    .
-    ..
-    my-environments
-        |
-        |- environments
-    ```
-3) Change into the new `my-environments/environments` directory.
-
-4) Install prerequisites.
+1) Install prerequisites.
 
     ```Shell
     sudo apt install \
@@ -54,29 +39,11 @@ To optimize the build process, all environments extend each other. For example, 
     grep
     ``` 
 
-5) Initialize a new git repository with `main` as the default branch:
-
-    ```Shell
-    # NOTE: this changes global git settings!!!
-    git config --global init.defaultBranch main
-    git init
-    ```
-
-6) Update `.gitignore` to ignore the `secrets` directory.
-
-    ```Shell
-    # file: .gitignore
-
-    # Ignore everything in secrets/ except for the .gitkeep file.
-    secrets/*
-    !secrets/.gitkeep
-    ```
-
-7) Create a `dev` group with internal visibility in your Gitlab installation of the Data Analysis Platform.
+2) Create a `dev` group with internal visibility in your Gitlab installation of the Data Analysis Platform.
 
     Groups --> New group
 
-8) Create a new `environments` GitLab project with internal visibility in the `dev` group.
+3) Create a new `environments` GitLab project with internal visibility in the `dev` group.
 
     - Projects --> New project
 
@@ -88,7 +55,27 @@ To optimize the build process, all environments extend each other. For example, 
 
     - No README initialization
 
-9) Replace all configuration placeholders.
+4) Clone the `environments` repository to a location of your choice.
+
+    ```Shell
+    git clone ssh://git@gitlab.REPLACE:2222/dev/environments.git
+    ```
+
+5) Copy the contents of the `data-analysis-platform/src/environments` folder into your new local repository directory.
+
+6) Change into the new repository directory.
+
+7) Update `.gitignore` to ignore the `secrets` directory.
+
+    ```Shell
+    # file: .gitignore
+
+    # Ignore everything in secrets/ except for the .gitkeep file.
+    secrets/*
+    !secrets/.gitkeep
+    ```
+
+8) Replace all configuration placeholders.
 
     In this step, all files are searched for the `{{TODO:REPLACE}}` placeholder, and all occurrences are printed to the console.
 
@@ -100,7 +87,7 @@ To optimize the build process, all environments extend each other. For example, 
     make find-todo-replace-placeholders
     ```
 
-10) Create CI/CD pipeline secrets variables.
+9) Create CI/CD pipeline secrets variables.
 
     - In the `environments` project, go to Project Settings --> CI/CD --> Variables.
 
@@ -119,7 +106,7 @@ To optimize the build process, all environments extend each other. For example, 
 
     **NOTE: The Secret Files feature of GitLab pipelines is usually used since it is more secure and flexible. However, the kaniko executor image does not allow to use this feature.
 
-11) If you are **not using TLS** to secure your Data Analysis Platform installation **(the default)** your have to modify the `.gitlab-ci-yml`:
+10) If you are **not using TLS** to secure your Data Analysis Platform installation **(the default)** your have to modify the `.gitlab-ci-yml`:
 
     - Add the `--insecure` flag to the `/kaniko/executor` script call for all jobs (for HTTP push).
 
@@ -141,17 +128,14 @@ To optimize the build process, all environments extend each other. For example, 
 
     Reference [Google's documentation](https://github.com/GoogleContainerTools/kaniko).
 
-12) Push the repository to GitLab and wait for all pipelines to build.
-
-    **TIP**: The GitLab UI displays the required commands:
+11) Push the repository to GitLab and wait for all pipelines to execute.
 
     ```Shell
-    git remote add origin ssh://git@gitlab.mydomain.com:2222/dev/environments.git
     git add .
     git commit -m "Initial commit"
-    git push --set-upstream origin main
+    git push
     ```
-13) Start a docker container from a development environment image and connect your IDE to it:
+12) Start a docker container from a development environment image and connect your IDE to it:
 
     **TIP**: You can use the Portainer of your Data Analysis Platform installation for easier container management. To access images from your local GitLab installation, you have to [configure a new container registry](https://docs.portainer.io/admin/registries/add/gitlab) (`http(s)://gitlab-registry.mydomain.com:5005`) in Portainer and `Override default configuration` in the settings section.
 

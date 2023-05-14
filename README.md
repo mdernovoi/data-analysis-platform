@@ -18,7 +18,9 @@ This platform is entirely **technology agnostic**, making it suitable for use wi
 
 4) [Learn about custom docker development environments](docs/environments.md) (`src/environments`)
 
-5) Read the [full documentation](docs/index.md#table-of-contents)
+5) [Check out a GitLab Pipeline example with MLflow and custom docker environments](src/gitlab_ci_pipeline_example/README.md) (`src/gitlab_ci_pipeline_example`).
+
+6) Read the [full documentation](docs/index.md#table-of-contents)
 
 ## Mission
 
