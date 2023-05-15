@@ -9,6 +9,10 @@ Automatically upgrading your configuration is not possible since you could have 
 
 To upgrade to the latest `data-analysis-platform` release, execute the following steps:
 
+**NOTE**: It is recommended to perform a **full consistent backup** of your installation before an upgrade. Some services (e.g., GitLab) perform complex migrations, which might fail and corrupt your data.
+
+**NOTE**: Be especially careful when performing upgrades from very old versions. Some services require a fine-grained upgrade path to succeed.
+
 1) Go to the root of your own `custom-data-analysis-platform-template` repository directory.
 
 2) Execute 
