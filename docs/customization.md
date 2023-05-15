@@ -33,6 +33,8 @@ During [upgrades](upgrade.md), only files in the reference `data-analysis-platfo
 
 **NOTE**: Files in the `custom-data-analysis-platform-template` directory (except for the templates in the `data-analysis-platform` folder) can be arbitrarily modified and adapted to your needs.
 
+**NOTE**: It is recommended to perform a full consistent backup of your installation before applying any changes.
+
 To modify your Data Analysis Platform setup:
 
 1) Go to the root of your own `custom-data-analysis-platform-template` repository directory.
