@@ -20,7 +20,7 @@ mlflow == 2.3.2
 
 ## Storage access
 # S3
-boto3 == 1.26.133 
+boto3 == 1.26.142 
 # Postgresql (sqlalchemy requirement)
 # TODO: replace with source dependency since the binary package
 # is not intended to be run in production.
