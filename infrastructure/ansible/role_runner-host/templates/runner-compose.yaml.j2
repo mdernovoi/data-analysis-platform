@@ -4,7 +4,7 @@ services:
 
   nginx-proxy:
   # config created with https://www.digitalocean.com/community/tools/nginx
-    image: nginx:1.24
+    image: nginx:1.25
     deploy:
         replicas: 1
         restart_policy:
@@ -44,7 +44,7 @@ services:
     # refs:
     # - https://docs.portainer.io/advanced/reverse-proxy/nginx
     # - https://docs.portainer.io/start/install-ce/server/docker/linux
-    image: portainer/portainer-ce:linux-amd64-2.18.2
+    image: portainer/portainer-ce:linux-amd64-2.18.3
     deploy:
         replicas: 1
         restart_policy:

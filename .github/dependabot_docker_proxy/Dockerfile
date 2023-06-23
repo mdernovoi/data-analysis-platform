@@ -1,8 +1,8 @@
 # dependabot proxy for automatic version scanning
 
-FROM nginx:1.24
+FROM nginx:1.25
 
-FROM portainer/portainer-ce:linux-amd64-2.18.2
+FROM portainer/portainer-ce:linux-amd64-2.18.3
 
 FROM dpage/pgadmin4:7.3
 
