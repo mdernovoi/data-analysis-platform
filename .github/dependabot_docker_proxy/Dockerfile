@@ -13,6 +13,6 @@ FROM minio/minio:RELEASE.2023-04-20T17-56-55Z
 
 FROM mdernovoi/mlflow:v1.5.0
 
-FROM gitlab/gitlab-ce:15.11.2-ce.0
+FROM gitlab/gitlab-ce:16.1.0-ce.0
 
 FROM gitlab/gitlab-runner:ubuntu-v15.11.0
