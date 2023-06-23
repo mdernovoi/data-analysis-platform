@@ -219,7 +219,7 @@ This guide describes a **standard installation** on a **local machine (no remote
       --rm -it \
       -v {{ paths.data }}/{{ host_prefix }}_gitlab-runner-generic-1/etc.gitlab-runner:/etc/gitlab-runner \
       --add-host "gitlab.{{ project_domain_name }}:{{ service_host_ip }}" \
-      gitlab/gitlab-runner:ubuntu-v15.11.0 \
+      gitlab/gitlab-runner:ubuntu-{{ your gitlab runner version (check DockerHub for possible values) }} \
       register \
       --template-config /etc/gitlab-runner/config_templates/gitlab-runner-generic.config.toml \
       --non-interactive \
