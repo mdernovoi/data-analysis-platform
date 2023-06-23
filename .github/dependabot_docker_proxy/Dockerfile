@@ -15,4 +15,4 @@ FROM mdernovoi/mlflow:v1.5.0
 
 FROM gitlab/gitlab-ce:16.1.0-ce.0
 
-FROM gitlab/gitlab-runner:ubuntu-v15.11.0
+FROM gitlab/gitlab-runner:ubuntu-v16.1.0
