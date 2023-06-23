@@ -1,6 +1,6 @@
 # dependabot proxy for automatic version scanning
 
-FROM nginx:1.24
+FROM nginx:1.25
 
 FROM portainer/portainer-ce:linux-amd64-2.18.2
 
