@@ -2,7 +2,7 @@
 
 FROM nginx:1.25
 
-FROM portainer/portainer-ce:linux-amd64-2.18.3
+FROM portainer/portainer-ce:linux-amd64-2.18.4
 
 FROM dpage/pgadmin4:7.3
 
