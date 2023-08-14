@@ -4,7 +4,7 @@ mlflow == 2.4.1
 
 ## Storage
 # S3
-boto3 == 1.26.159
+boto3 == 1.28.25
 
 ## General
 python-dotenv == 1.0.0
