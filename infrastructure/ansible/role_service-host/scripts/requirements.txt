@@ -1,7 +1,7 @@
 
 ## Storage
 # S3
-minio == 7.1.15 
+minio == 7.1.16 
 
 ## General
 python-dotenv == 1.0.0 
