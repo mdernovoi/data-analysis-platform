@@ -1,6 +1,6 @@
 
 ## Experiment tracking
-mlflow == 2.4.1
+mlflow == 2.6.0
 
 ## Storage
 # S3
