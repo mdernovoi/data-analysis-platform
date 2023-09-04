@@ -1,6 +1,6 @@
 
 ## Jupyter notebooks
-notebook == 6.5.4 
+notebook == 7.0.3 
 
 ## General
 python-dotenv == 1.0.0 
