@@ -13,7 +13,7 @@ kaleido == 0.2.1
 pillow == 9.5.0 
 
 ## Data processing
-pandas == 2.0.2 
+pandas == 2.1.0 
 
 ## Experiment tracking
 mlflow == 2.4.1 
