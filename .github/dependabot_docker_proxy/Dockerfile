@@ -6,7 +6,7 @@ FROM portainer/portainer-ce:linux-amd64-2.18.3
 
 FROM dpage/pgadmin4:7.3
 
-FROM postgres:15.3
+FROM postgres:16.0
 
 # TODO: for some reason ignored by dependabot...
 FROM minio/minio:RELEASE.2023-06-19T19-52-50Z
